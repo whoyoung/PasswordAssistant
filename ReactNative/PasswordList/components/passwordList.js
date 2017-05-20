@@ -21,14 +21,15 @@ export default class TodoApp extends React.Component {
     }
     componentWillMount() {
         this.passwordList = realm.objects('PasswordItems');
-        // if (this.passwordList.length < 1) {
-        //     realm.write(() => {
-        //         realm.create('passwordList', {name: 'Todo List', creationDate: new Date()});
-        //     });
-        // }
-        if (this.passwordList.length) {
-
+        if (!this.passwordList.length) {
+            realm.write(() => {
+                realm.create('PasswordItems', {
+                    id:0,typeName: '网站',serverProvider: 'react native',passwordType:0,
+                    creationDate: new Date(), description: '这是备注', userName: 'yanghu'
+                });
+            });
         }
+        
         this.passwordList.addListener((passwords, changes) => {
             console.log("changed: " + JSON.stringify(changes));
         });
@@ -40,6 +41,12 @@ export default class TodoApp extends React.Component {
 
     render() {
         let objects = realm.objects('PasswordItems');
+        if (objects.length) {
+            console.log('====================================');
+        console.log(JSON.stringify(objects[0]));
+        console.log('====================================');
+        }
+        
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>

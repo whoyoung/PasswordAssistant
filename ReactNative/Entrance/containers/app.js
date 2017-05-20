@@ -39,21 +39,21 @@ export default class app extends Component {
         storage.save({
             key: 'passwordTypes',  
             data: {
-                '0': ['type', 'typeName', 'serverProvider', 'userName', 'loginAccount',
+                '0': ['passwordType', 'typeName', 'serverProvider', 'userName', 'loginAccount',
                     'loginPassword', 'mobilePhone', 'description', 'creationDate'],//website
                 
-                '1': ['type', 'typeName', 'serverProvider', 'bankCardNum', 'withdrawalPassword',
+                '1': ['passwordType', 'typeName', 'serverProvider', 'bankCardNum', 'withdrawalPassword',
                     'MobileBankLoginPassword', 'MobileBankPaymentPassword', 'mobilePhone', 
                     'EBankLoginPassword', 'EBankPaymentPassword', 'bankReservedInfo', 
                     'queryPassword', 'UShieldBootPassword', 'UShieldPaymentPassword', 
                     'bankSubsidiaryCity', 'bankBranch', 'description', 'creationDate'],//bank
-                '2': ['type', 'typeName', 'serverProvider', 'userName', 'loginAccount',
+                '2': ['passwordType', 'typeName', 'serverProvider', 'userName', 'loginAccount',
                     'loginPassword', 'mobilePhone', 'description', 'creationDate'],//mail
-                '3': ['type', 'typeName', 'serverProvider', 'mobilePhone', 'telephone',
+                '3': ['passwordType', 'typeName', 'serverProvider', 'mobilePhone', 'telephone',
                     'company', 'post', 'mail', 'detailAddress', 'lunarCalendarBirthday',
                     'solarCalendarBirthday', 'detailAddress', 'contactName', 'zipCode', 
                     'mobilePhone', 'telephone', 'description', 'creationDate'],//contact
-                '4': ['type', 'typeName', 'serverProvider', 'detailAddress', 'contactName', 
+                '4': ['passwordType', 'typeName', 'serverProvider', 'detailAddress', 'contactName', 
                     'zipCode', 'mobilePhone', 'telephone', 'description', 'creationDate'],//location
             },
             expires: null
