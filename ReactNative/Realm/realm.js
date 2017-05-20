@@ -20,7 +20,7 @@ PasswordItems.schema = {
         id: 'int',
         typeName: 'string',//账号类型名称
 
-        type: 'int',//账号类型
+        passwordType: 'int',//账号类型
         serverProvider: 'string',//邮箱名称、网站名称、银行名称、地址名称、联系人姓名
         creationDate: 'date',//创建日期
         description: { type: 'string', optional: true },//备注

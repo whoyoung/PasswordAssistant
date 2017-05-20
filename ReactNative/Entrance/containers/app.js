@@ -67,7 +67,6 @@ export default class app extends Component {
     }
 
     componentWillMount() {
-
     }
     componentDidMount() {
     }
