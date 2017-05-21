@@ -1,3 +1,3 @@
-import PasswordList from './components/passwordList'
+import Container from './containers/container'
 
-export default PasswordList;
+export default Container;

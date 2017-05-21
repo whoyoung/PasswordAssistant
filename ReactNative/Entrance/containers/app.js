@@ -26,7 +26,7 @@ import Setting from '../../Setting';
 export default class app extends Component {
     constructor(props) {
         super(props);
-
+        global.maxPrimaryKey = -1;
         const storage = new Storage({
             size: 1000,
             storageBackend: AsyncStorage,

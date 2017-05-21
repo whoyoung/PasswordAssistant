@@ -16,69 +16,50 @@ import { ListView } from 'realm/react-native';
 export default class TodoApp extends React.Component {
     constructor(props) {
         super(props);
+        this.showView = null;
     }
     componentWillMount() {
         this.passwordList = realm.objects('PasswordItems');
         if (!this.passwordList.length) {
-            storage.load({
-                key: 'maxPrimaryKey',
-                autoSync: false,
-            }).then(result => {
-
-            }).catch(err => {
-                console.log('====================================');
-                console.log(err.name);
-                console.log('====================================');
-
-                // switch (err.name) {
-                //     case 'NotFoundError': {
-                //         storage.save({
-                //             key: 'maxPrimaryKey',
-                //             data: {
-                //                 maxNum: 0,
-                //             },
-                //             expires: null
-                //         })
-                //         realm.write(() => {
-                //             realm.create('PasswordItems', {
-                //                 id: 0, typeName: '网站', serverProvider: 'react native', passwordType: 0,
-                //                 creationDate: new Date(), description: '这是备注', userName: 'yanghu'
-                //             });
-                //         });
-                //     }
-                //         break;
-                //     case 'ExpiredError':
-                //         // TODO
-                //         break
-                // }
-            })
+            this._addWebsite('website', 'this is a website', 'yanghu');
         }
 
         this.passwordList.addListener((passwords, changes) => {
-            console.log("changed: " + JSON.stringify(changes));
+            this.props.actions.refreshList();
         });
     }
 
     componentWillUnmount() {
         realm.removeAllListeners();
     }
-
+    _addWebsite(serverProvider, description, userName) {
+        maxPrimaryKey += 1;
+        realm.write(() => {
+            realm.create('PasswordItems', {
+                id: maxPrimaryKey, typeName: '网站', serverProvider: serverProvider, passwordType: 0,
+                creationDate: new Date(), description: description, userName: userName
+            });
+        });
+    }
     render() {
+        let { shouldRefreshList } = this.props.state;
+        if (shouldRefreshList) {
+            this.props.actions.resetRefreshState();
+        }
         let objects = realm.objects('PasswordItems');
+        if (objects.length) {
+            this.showView = (<Text style={styles.text} onPress={() => {
+                this._addWebsite('realm', '这是realm', 'whoyoung');
+            }}>
+                {`${objects[objects.length - 1].serverProvider}`}
+            </Text>);
+        } else {
+            this.showView = <Text style={styles.emptyText}>empty</Text>
+        }
 
         return (
             <View style={styles.container}>
-                {
-                    objects.length ? (
-                        <Text style={styles.text}>
-                            {`${objects[0].typeName}`}
-                        </Text>
-                    ) : (
-                            <Text style={styles.emptyText}>
-                                empty
-                            </Text>
-                        )
-                }
+                {this.showView}
             </View>
         );
     }
@@ -89,7 +70,6 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 64,
         padding: 15,
-        
     },
     text: {
         color: 'black',
