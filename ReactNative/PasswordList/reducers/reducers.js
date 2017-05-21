@@ -2,25 +2,34 @@
 import * as types from '../actions/actionTypes';
 
 const initState = {
-    shouldRefresh: false,
+    loadTypeKeysDone: false,
+    loadLastedPrimaryKeyDone: false,
+    loadPasswordItemsDone: false,
+    loadPasswordTypesDone: false,
 }
 
 export default function reducers(state = initState, action = {}) {
     switch (action.type) {
-        case 'yh_passwordList_listChange': {
+        case 'yh_passwordList_loadTypeKeys': 
             return {
                 ...state,
-                shouldRefresh: true
+                loadTypeKeysDone: true
             }
-        }
-            break;
-        case 'yh_passwordList_resetRefreshState': {
+        case 'yh_passwordList_loadLastedPrimaryKey': 
             return {
                 ...state,
-                shouldRefresh: false
+                loadLastedPrimaryKeyDone: true
             }
-        }
-            break;
+        case 'yh_passwordList_loadPasswordItems': 
+            return {
+                ...state,
+                loadPasswordItemsDone: true
+            }
+        case 'yh_passwordList_loadPasswordTypes': 
+            return {
+                ...state,
+                loadPasswordTypesDone: true
+            }
         default:
             return state;
     }

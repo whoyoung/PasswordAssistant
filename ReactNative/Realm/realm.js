@@ -8,9 +8,8 @@ CustomItem.schema = {
     properties: {
         itemKey: { type: 'string', default: '自定义', optional: true },
         itemValue: { type: 'string', optional: true },
-    },
+    }
 };
-//mail  website  bank  location  
 
 class PasswordItems extends Realm.Object { }
 PasswordItems.schema = {
@@ -59,4 +58,35 @@ PasswordItems.schema = {
     },
 };
 
-export default new Realm({ schema: [CustomItem, PasswordItems] });
+class LastedPrimaryKey extends Realm.Object { }
+LastedPrimaryKey.schema = {
+    name: 'LastedPrimaryKey',
+    primaryKey: 'id',
+    properties: {
+        id: 'int',
+        lastedId: 'int',
+    }
+};
+
+class PasswordTypes extends Realm.Object { }
+PasswordTypes.schema = {
+    name: 'PasswordTypes',
+    primaryKey: 'id',
+    properties: {
+        id: 'int',
+        typeKey: 'int',
+        typeFiels: { type: 'string'}
+    }
+};
+
+class TypeKeys extends Realm.Object { }
+TypeKeys.schema = {
+    name: 'TypeKeys',
+    primaryKey: 'id',
+    properties: {
+        id: 'int',
+        typeList: { type: 'string'}
+    }
+};
+
+export default new Realm({ schema: [CustomItem, PasswordItems, LastedPrimaryKey,PasswordTypes,TypeKeys] });

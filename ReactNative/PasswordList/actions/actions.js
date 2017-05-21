@@ -1,10 +1,18 @@
 import * as types from './actionTypes';
 
-export function refreshList(){
-    return {type:types.yh_passwordList_listChange}
+export function loadTypeKeys(){
+    return {type:types.yh_passwordList_loadTypeKeys}
 }
 
-export function resetRefreshState(){
-    return {type:types.yh_passwordList_resetRefreshState}
+export function loadLastedPrimaryKey(){
+    return {type:types.yh_passwordList_loadLastedPrimaryKey}
+}
+
+export function loadPasswordItems(){
+    return {type:types.yh_passwordList_loadPasswordItems}
+}
+
+export function loadPasswordTypes(){
+    return {type:types.yh_passwordList_loadPasswordTypes}
 }
 
