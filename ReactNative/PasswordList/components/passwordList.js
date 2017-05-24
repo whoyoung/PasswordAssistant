@@ -24,7 +24,8 @@ export default class passwordList extends React.Component {
         this.lastedPrimaryKey = realm.objects('LastedPrimaryKey');
         this.passwordTypes = realm.objects('PasswordTypes');
         if (!this.typeKeys.length) {
-            let keysStr = JSON.stringify([0, 1, 2, 3, 4]);
+            //网站、银行、社交账号、联系人、证件、备忘录
+            let keysStr = JSON.stringify([0, 1, 2, 3, 4, 5]);
             realm.write(() => {
                 realm.create('TypeKeys', { id: 0, typeList: keysStr });
             });
@@ -63,7 +64,8 @@ export default class passwordList extends React.Component {
                 let secondTypeStr = JSON.stringify(
                     [
                         'passwordType', 'typeName', 'serverProvider', 'userName', 'loginAccount',
-                        'loginPassword', 'mobilePhone', 'description', 'creationDate'
+                        'loginPassword', 'mobilePhone', 'MobileBankPaymentPassword', 'description', 
+                        'creationDate'
                     ]
                 )
                 realm.create('PasswordTypes', {
@@ -73,9 +75,8 @@ export default class passwordList extends React.Component {
                 let thirdTypeStr = JSON.stringify(
                     [
                         'passwordType', 'typeName', 'serverProvider', 'mobilePhone', 'telephone',
-                        'company', 'post', 'mail', 'detailAddress', 'lunarCalendarBirthday',
-                        'solarCalendarBirthday', 'detailAddress', 'contactName', 'zipCode',
-                        'mobilePhone', 'telephone', 'description', 'creationDate'
+                        'company', 'post', 'mail', 'lunarCalendarBirthday', 'solarCalendarBirthday', 
+                        'detailAddress', 'zipCode', 'description', 'creationDate'
                     ]
                 )
                 realm.create('PasswordTypes', {
@@ -84,12 +85,21 @@ export default class passwordList extends React.Component {
 
                 let fourthTypeStr = JSON.stringify(
                     [
-                        'passwordType', 'typeName', 'serverProvider', 'detailAddress', 'contactName',
-                        'zipCode', 'mobilePhone', 'telephone', 'description', 'creationDate'
+                        'passwordType', 'typeName', 'serverProvider', 'credentialsOwner',
+                        'credentialsNum', 'credentialsPassword', 'credentialsAddress',
+                        'credentialsDate', 'description', 'creationDate'
                     ]
                 )
                 realm.create('PasswordTypes', {
                     id: 4, typeKey: 4, typeFiels: fourthTypeStr
+                });
+                let fifthTypeStr = JSON.stringify(
+                    [
+                        'passwordType', 'typeName', 'serverProvider', 'description', 'creationDate'
+                    ]
+                )
+                realm.create('PasswordTypes', {
+                    id: 5, typeKey: 5, typeFiels: fifthTypeStr
                 });
             })
         }
@@ -166,6 +176,7 @@ export default class passwordList extends React.Component {
 
         return (
             <View style={styles.container}>
+                <Text style={styles.initText}>empty</Text>
                 {this.showView}
             </View>
         );

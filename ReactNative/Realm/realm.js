@@ -24,7 +24,6 @@ PasswordItems.schema = {
         creationDate: 'date',//创建日期
         description: { type: 'string', optional: true },//备注
         customs: { type: 'list', objectType: 'CustomItem' },//自定义项目
-
         
         userName: { type: 'string', optional: true },//用户名
         loginAccount: { type: 'string', optional: true },//登陆账号
@@ -47,12 +46,17 @@ PasswordItems.schema = {
         detailAddress: { type: 'string', optional: true }, //详细地址
         zipCode: { type: 'string', optional: true },//邮编
         telephone: { type: 'string', optional: true },//固定电话
-        contactName: { type: 'string', optional: true },//联系人姓名
 
         company: { type: 'string', optional: true },//公司
         post: { type: 'string', optional: true },//职位
         solarCalendarBirthday: { type: 'string', optional: true },//阳历生日
         lunarCalendarBirthday: { type: 'string', optional: true },//农历生日
+
+        credentialsOwner: { type: 'string', optional: true },//证件持有人
+        credentialsNum: { type: 'string', optional: true },//证件号码
+        credentialsPassword: { type: 'string', optional: true },//证件密码
+        credentialsAddress: { type: 'string', optional: true },//证件号码
+        credentialsDate: { type: 'string', optional: true },//证件有效期
 
         data: { type: 'data', optional: true },//data类型数据，为以后功能扩展
     },
