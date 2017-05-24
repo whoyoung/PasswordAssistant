@@ -24,7 +24,7 @@ export default class passwordList extends React.Component {
         this.lastedPrimaryKey = realm.objects('LastedPrimaryKey');
         this.passwordTypes = realm.objects('PasswordTypes');
         if (!this.typeKeys.length) {
-            //网站、银行、社交账号、联系人、证件、备忘录
+            //网站、银行、社交账号、联系人、证件、记事本
             let keysStr = JSON.stringify([0, 1, 2, 3, 4, 5]);
             realm.write(() => {
                 realm.create('TypeKeys', { id: 0, typeList: keysStr });
@@ -140,11 +140,33 @@ export default class passwordList extends React.Component {
     componentWillUnmount() {
         realm.removeAllListeners();
     }
+    _getNewPrimaryId() {
+        let primaryKey = this.lastedPrimaryKey[0];
+        let tempKey = primaryKey.lastedId + 1;
+        realm.write(() => {
+        realm.create('LastedPrimaryKey', {
+                id:primaryKey.id, lastedId: tempKey 
+            },true);
+        });
+        return tempKey;
+    }
     _addWebsite(serverProvider, description, userName) {
+        let newPrimaryId = this._getNewPrimaryId();
+        let server = '' + serverProvider + newPrimaryId;
         realm.write(() => {
             realm.create('PasswordItems', {
-                id: maxPrimaryKey, typeName: '网站', serverProvider: serverProvider, passwordType: 0,
+                id: newPrimaryId, typeName: '网站', serverProvider: server, passwordType: 0,
                 creationDate: new Date(), description: description, userName: userName
+            });
+        });
+    }
+    _addNoteBook(serverProvider, description) {
+        let newPrimaryId = this._getNewPrimaryId();
+        let server = '' + serverProvider + newPrimaryId;
+        realm.write(() => {
+            realm.create('PasswordItems', {
+                id: newPrimaryId, typeName: '记事本', serverProvider: server, passwordType: 5,
+                creationDate: new Date(), description: description,
             });
         });
     }
@@ -164,6 +186,9 @@ export default class passwordList extends React.Component {
             )
         }
         let objects = realm.objects('PasswordItems');
+        console.log('====================================objects');
+        console.log(JSON.stringify(objects));
+        console.log('====================================');
         if (objects.length) {
             this.showView = (<Text style={styles.initText} onPress={() => {
                 this._addWebsite('realm', '这是realm', 'whoyoung');
@@ -176,7 +201,16 @@ export default class passwordList extends React.Component {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.initText}>empty</Text>
+                <Text style={styles.initText} onPress={() => {
+                    this._addWebsite('website', '这是网站', 'whoyoung');
+                }} >
+                    新建网站账号
+                </Text>
+                <Text style={styles.initText} onPress={() => {
+                    this._addNoteBook('noteBook', '这是记事本', 'yagnhu');
+                }} >
+                    新建备忘录
+                </Text>
                 {this.showView}
             </View>
         );
