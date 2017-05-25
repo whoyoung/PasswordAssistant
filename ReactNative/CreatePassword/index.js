@@ -1,4 +1,7 @@
-import React,{Component} from 'react';
+import NewForm from './components/newForm'
+export default NewForm;
+
+/*import React,{Component} from 'react';
 import {
   View,
   Text,
@@ -33,4 +36,4 @@ class CreatePassword extends Component{
   }
 }
 
-export default CreatePassword;
+export default CreatePassword;*/
