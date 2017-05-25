@@ -17,6 +17,10 @@ export default class passwordList extends React.Component {
     constructor(props) {
         super(props);
         this.showView = null;
+        this.ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2,
+            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+        })
     }
     componentWillMount() {
         this.typeKeys = realm.objects('TypeKeys');
@@ -64,7 +68,7 @@ export default class passwordList extends React.Component {
                 let secondTypeStr = JSON.stringify(
                     [
                         'passwordType', 'typeName', 'serverProvider', 'userName', 'loginAccount',
-                        'loginPassword', 'mobilePhone', 'MobileBankPaymentPassword', 'description', 
+                        'loginPassword', 'mobilePhone', 'MobileBankPaymentPassword', 'description',
                         'creationDate'
                     ]
                 )
@@ -75,7 +79,7 @@ export default class passwordList extends React.Component {
                 let thirdTypeStr = JSON.stringify(
                     [
                         'passwordType', 'typeName', 'serverProvider', 'mobilePhone', 'telephone',
-                        'company', 'post', 'mail', 'lunarCalendarBirthday', 'solarCalendarBirthday', 
+                        'company', 'post', 'mail', 'lunarCalendarBirthday', 'solarCalendarBirthday',
                         'detailAddress', 'zipCode', 'description', 'creationDate'
                     ]
                 )
@@ -104,35 +108,18 @@ export default class passwordList extends React.Component {
             })
         }
         if (!this.passwordList.length) {
-            //this._addWebsite('website', 'this is a website', 'yanghu');
         }
-        
+
         this.typeKeys.addListener((keys, changes) => {
-            console.log('====================================loadTypeKeys');
-            console.log(JSON.stringify(keys));
-            console.log(JSON.stringify(changes));
-            console.log('====================================');
             this.props.actions.loadTypeKeys();
         });
         this.lastedPrimaryKey.addListener((keys, changes) => {
-            console.log('====================================loadLastedPrimaryKey');
-            console.log(JSON.stringify(keys));
-            console.log(JSON.stringify(changes));
-            console.log('====================================');
             this.props.actions.loadLastedPrimaryKey();
         });
         this.passwordTypes.addListener((types, changes) => {
-            console.log('====================================loadPasswordTypes');
-            console.log(JSON.stringify(types));
-            console.log(JSON.stringify(changes));
-            console.log('====================================');
             this.props.actions.loadPasswordTypes();
         });
         this.passwordList.addListener((passwords, changes) => {
-            console.log('====================================loadPasswordItems');
-            console.log(JSON.stringify(passwords));
-            console.log(JSON.stringify(changes));
-            console.log('====================================');
             this.props.actions.loadPasswordItems();
         });
     }
@@ -144,9 +131,9 @@ export default class passwordList extends React.Component {
         let primaryKey = this.lastedPrimaryKey[0];
         let tempKey = primaryKey.lastedId + 1;
         realm.write(() => {
-        realm.create('LastedPrimaryKey', {
-                id:primaryKey.id, lastedId: tempKey 
-            },true);
+            realm.create('LastedPrimaryKey', {
+                id: primaryKey.id, lastedId: tempKey
+            }, true);
         });
         return tempKey;
     }
@@ -185,16 +172,27 @@ export default class passwordList extends React.Component {
                 </View>
             )
         }
-        let objects = realm.objects('PasswordItems');
-        console.log('====================================objects');
-        console.log(JSON.stringify(objects));
-        console.log('====================================');
-        if (objects.length) {
-            this.showView = (<Text style={styles.initText} onPress={() => {
-                this._addWebsite('realm', '这是realm', 'whoyoung');
-            }}>
-                {`${objects[objects.length - 1].serverProvider}`}
-            </Text>);
+        let typeKeys = this.typeKeys[0];
+        let typeArray = JSON.parse(typeKeys.typeList);
+        let data = {};
+        typeArray.forEach(function (element) {
+            let campareStr = 'passwordType = ' + element;
+            let tempResults = this.passwordList.filtered(campareStr);
+            if (tempResults.length) {
+                data['' + element] = tempResults;
+            }
+        }, this);
+        if (this.passwordList.length) {
+            this.showView = (<ListView stype={{ marginTop: 15 }}
+                dataSource={this.ds.cloneWithRowsAndSections(data)}
+                renderRow={(rowData, sectionId, rowId) => {
+                    return <Text>{rowData.serverProvider}</Text>
+                }}
+                renderSectionHeader={(sectionData, sectionID) => {
+                    let section = sectionData[0];
+                    return <Text>{section.typeName}</Text>
+                }}
+            />);
         } else {
             this.showView = <Text style={styles.initText}>empty</Text>
         }
