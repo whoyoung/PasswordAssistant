@@ -17,8 +17,6 @@ PasswordItems.schema = {
     primaryKey: 'id',
     properties: {
         id: 'int',
-        typeName: 'string',//账号类型名称
-
         passwordType: { type: 'int', indexed: true },//账号类型
         serverProvider: 'string',//邮箱名称、网站名称、银行名称、地址名称、联系人姓名
         creationDate: 'date',//创建日期
@@ -55,10 +53,10 @@ PasswordItems.schema = {
         credentialsOwner: { type: 'string', optional: true },//证件持有人
         credentialsNum: { type: 'string', optional: true },//证件号码
         credentialsPassword: { type: 'string', optional: true },//证件密码
-        credentialsAddress: { type: 'string', optional: true },//证件号码
+        credentialsAddress: { type: 'string', optional: true },//证件地址
         credentialsDate: { type: 'string', optional: true },//证件有效期
 
-        data: { type: 'data', optional: true },//data类型数据，为以后功能扩展
+        data: { type: 'data', optional: true }//data类型数据，为以后功能扩展
     },
 };
 

@@ -1,7 +1,9 @@
 import {combineReducers} from 'redux';
-import listReducer from '../../PasswordList/reducers'
+import listReducer from '../../PasswordList/reducers';
+import createReducer from '../../CreatePassword/reducers/'
 const appReducers = combineReducers({
-    listReducer
+    listReducer,
+    createReducer
 });
 
 export default appReducers;
