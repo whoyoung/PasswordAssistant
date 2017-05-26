@@ -4,7 +4,8 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableHighlight
+    TouchableHighlight,
+    ScrollView
 } from 'react-native';
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
@@ -101,12 +102,12 @@ export default class TcombFormNativeDemo extends Component {
     render() {
         let {formStruct} = this.props.state;
         return (
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag' >
                 <RealForm ref='form' type={tForm.struct(formStruct)}  onChange={(value, path) => this.onChange(value, path)} />
                 <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableHighlight>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
         flex: 1,
         top: 64,
         padding: 15,
+        bottom: 40,
         backgroundColor: '#F5FCFF',
     },
     button: {
