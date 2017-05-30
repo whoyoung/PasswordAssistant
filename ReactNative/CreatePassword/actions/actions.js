@@ -47,3 +47,10 @@ function formFormat(element) {
             return tForm.maybe(tForm.String);
     }
 }
+
+export function updateOffsetY(offsetY) {
+    return {
+        type: types.yh_createPassword_updateOffsetY,
+        offsetY: offsetY
+    }
+}

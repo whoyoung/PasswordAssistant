@@ -1,38 +1,24 @@
 'use strict'
 import React, { Component } from 'react';
-import {
+import ReactNative, {
     StyleSheet,
     Text,
     View,
     TouchableHighlight,
-    ScrollView
+    ScrollView,
+    Keyboard,
+    Dimensions,
+    Platform
 } from 'react-native';
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
 RealForm.i18n.optional = ' (选填)';
 RealForm.i18n.required = ' (必填)';
-
+let screenHeight = Dimensions.get('window').height - 64;
 import realm from '../../Realm/realm';
 let typeKeys = realm.objects('TypeKeys');
 let lastedPrimaryKey = realm.objects('LastedPrimaryKey');
-// let Person = tForm.struct({
-//   name: tForm.String,
-//   surname: tForm.maybe(tForm.String),
-//   age: tForm.Number,
-//   rememberMe: tForm.Boolean
-// });
-
-// const defaultState = {
-//   options: {
-//     fields: {
-//       name: {}
-//     }
-//   },
-//   value: {
-//     name: 'hu',
-//     surname: 'yang'
-//   }
-// }
+let isIOS = Platform.OS !== 'android';
 
 export default class TcombFormNativeDemo extends Component {
     constructor(props) {
@@ -59,13 +45,78 @@ export default class TcombFormNativeDemo extends Component {
         //         }
         //     }
         // };
+        this.options = {
+            fields: {
+                serverProvider: {
+                    label: 'serverProvider',
+                    onFocus: () => {
+                        this.inputRef = 'serverProvider';
+                        console.log('inputref------' + this.inputRef);
+                    }
+                },
+                description: {
+                    label: 'description',
+                    onFocus: () => {
+                        this.inputRef = 'description';
+                        console.log('description------' + this.inputRef);
+                    }
+                }
+            }
+        }
+
+        //多textInput,键盘遮挡解决方案http://www.voidcn.com/blog/hsbirenjie/article/p-6402538.html
+        this.contentHeight = 0;
+        this.inputRef = null;//当前编辑的textInput
+        this.moveH = 0;//ScrollView滑动的距离
+        this.lastMoveH = 0;//保留上次滑动的距离
+        this.needMove = false;//弹出键盘时，inputRef是否需要滑动
     }
-    
+
     componentWillMount() {
-        this.props.actions.changeType(0);
+        this.props.actions.changeType(1);
     }
     componentDidMount() {
         // this.refs.form.getComponent('age').refs.input.focus();
+        if (isIOS) {
+            this.subscriptions = [
+                Keyboard.addListener('keyboardDidShow', this._keyboardDidShow),
+                Keyboard.addListener('keyboardDidHide', this._keyboardDidHide)
+            ];
+        }
+    }
+    componentWillUnmount() {
+        if (isIOS) {
+            this.subscriptions.forEach((sub) => sub.remove());
+        }
+    }
+    _keyboardDidShow = (e) => {
+        if (!this.inputRef) return;
+        this.needMove = false;
+        this.refs.form.getComponent(this.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
+            let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
+            //输入框距离底部的距离小于键盘的高度，需要滑动
+            if (leftHeight < e.startCoordinates.height + 25) {
+                this.needMove = true;
+                // 需要移动的距离
+                let moveHeight = 30 + (e.startCoordinates.height - leftHeight);
+                console.log("this.moveH=" + this.moveH, "this.contentHeight=" + this.contentHeight, "height=" + screenHeight);
+
+                //moveH 异常数据处理
+                if (this.moveH + screenHeight > this.contentHeight) {
+                    this.moveH = this.contentHeight - screenHeight;
+                    console.log("===error===");
+                }
+                this.lastMoveH = this.moveH;
+                this.refs.scroll.scrollTo({ y: this.moveH + moveHeight, x: 0 });
+            }
+        });
+    }
+
+    _keyboardDidHide = () => {
+        if (this.needMove) {
+            this.refs.scroll.scrollTo({ y: this.lastMoveH, x: 0 });
+        }
+        this.inputRef = null;
     }
     // onChange(value, path) {
     // if (path.indexOf('rememberMe') >= 0) {
@@ -82,6 +133,9 @@ export default class TcombFormNativeDemo extends Component {
     // }
     // }
     onChange(value, path) {
+        console.log('====================================value');
+        console.log(JSON.stringify(value));
+        console.log('====================================');
         // if (path.indexOf('name') >= 0 && value.name !== this.state.value.name) {
         //     let formType = this.getFormType(value.name);
         //     this.setState({ value, type: formType });
@@ -99,11 +153,23 @@ export default class TcombFormNativeDemo extends Component {
     clearForm() {
         // this.setState({ ...defaultState });
     }
+
+    scrollViewTo(offsetY) {
+        this.refs.scroll.scrollTo({ y: offsetY, animated: true });
+    }
     render() {
-        let {formStruct} = this.props.state;
+        let { formStruct } = this.props.state;
         return (
-            <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag' >
-                <RealForm ref='form' type={tForm.struct(formStruct)}  onChange={(value, path) => this.onChange(value, path)} />
+            <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag'
+                ref='scroll'
+                onContentSizeChange={(contentWidth, contentHeight) => {
+                    this.contentHeight = parseInt(contentHeight);
+                }}
+                onScrollEndDrag={(e) => {
+                    this.moveH = e.nativeEvent.contentOffset.y;
+                }} >
+                <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
+                    options={this.options} />
                 <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableHighlight>
@@ -111,13 +177,13 @@ export default class TcombFormNativeDemo extends Component {
         );
     }
 }
+
 // options={this.state.options} value={this.state.value}
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        top: 64,
-        padding: 15,
-        bottom: 40,
+        paddingTop: 64 + 15,
+        paddingHorizontal: 15,
+        paddingBottom: 40,
         backgroundColor: '#F5FCFF',
     },
     button: {

@@ -2,6 +2,7 @@
 import * as types from '../actions/actionTypes';
 
 const initState = {
+    offsetY: 0,
     formType: 0,
     formStruct: {}
 }
@@ -19,6 +20,11 @@ export default function reducers(state = initState, action = {}) {
                 ...state,
                 formType: action.formType,
                 formStruct: action.formStruct
+            }
+        case 'yh_createPassword_updateOffsetY': 
+            return {
+                ...state,
+                offsetY: action.offsetY,
             }
         default:
             return state;
