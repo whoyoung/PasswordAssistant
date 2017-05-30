@@ -12,8 +12,8 @@ import ReactNative, {
 } from 'react-native';
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
-RealForm.i18n.optional = ' (选填)';
-RealForm.i18n.required = ' (必填)';
+// RealForm.i18n.optional = ' (选填)';
+// RealForm.i18n.required = ' (必填)';
 let screenHeight = Dimensions.get('window').height - 64;
 import realm from '../../Realm/realm';
 let typeKeys = realm.objects('TypeKeys');
@@ -45,24 +45,25 @@ export default class TcombFormNativeDemo extends Component {
         //         }
         //     }
         // };
-        this.options = {
-            fields: {
-                serverProvider: {
-                    label: 'serverProvider',
-                    onFocus: () => {
-                        this.inputRef = 'serverProvider';
-                        console.log('inputref------' + this.inputRef);
-                    }
-                },
-                description: {
-                    label: 'description',
-                    onFocus: () => {
-                        this.inputRef = 'description';
-                        console.log('description------' + this.inputRef);
-                    }
-                }
-            }
-        }
+
+        // this.options = {
+        //     fields: {
+        //         serverProvider: {
+        //             label: 'serverProvider',
+        //             onFocus: () => {
+        //                 this.inputRef = 'serverProvider';
+        //                 console.log('inputref------' + this.inputRef);
+        //             }
+        //         },
+        //         description: {
+        //             label: 'description',
+        //             onFocus: () => {
+        //                 this.inputRef = 'description';
+        //                 console.log('description------' + this.inputRef);
+        //             }
+        //         }
+        //     }
+        // }
 
         //多textInput,键盘遮挡解决方案http://www.voidcn.com/blog/hsbirenjie/article/p-6402538.html
         this.contentHeight = 0;
@@ -90,9 +91,10 @@ export default class TcombFormNativeDemo extends Component {
         }
     }
     _keyboardDidShow = (e) => {
-        if (!this.inputRef) return;
+        console.log('inputRef======'+this.inputRef);
+        if (!this.props.state.inputRef) return;
         this.needMove = false;
-        this.refs.form.getComponent(this.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
+        this.refs.form.getComponent(this.props.state.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
             let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
             //输入框距离底部的距离小于键盘的高度，需要滑动
             if (leftHeight < e.startCoordinates.height + 25) {
@@ -158,7 +160,10 @@ export default class TcombFormNativeDemo extends Component {
         this.refs.scroll.scrollTo({ y: offsetY, animated: true });
     }
     render() {
-        let { formStruct } = this.props.state;
+        let { formStruct, formOptions } = this.props.state;
+        console.log('====================================formOptions');
+        console.log(JSON.stringify(formOptions));
+        console.log('====================================');
         return (
             <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag'
                 ref='scroll'
@@ -169,7 +174,7 @@ export default class TcombFormNativeDemo extends Component {
                     this.moveH = e.nativeEvent.contentOffset.y;
                 }} >
                 <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
-                    options={this.options} />
+                    options={formOptions} />
                 <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableHighlight>
