@@ -13,10 +13,9 @@ import ReactNative, {
 import CreateNavBar from './navgationView';
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
-let screenHeight = Dimensions.get('window').height - 64;
+let screenHeight = Dimensions.get('window').height;
 import realm from '../../Realm/realm';
-let typeKeys = realm.objects('TypeKeys');
-let lastedPrimaryKey = realm.objects('LastedPrimaryKey');
+
 let isIOS = Platform.OS !== 'android';
 
 export default class CreateNewForm extends Component {
@@ -30,7 +29,7 @@ export default class CreateNewForm extends Component {
         this.needMove = false;//弹出键盘时，inputRef是否需要滑动
     }
     componentWillMount() {
-        this.props.actions.changeType(1);
+        this.props.actions.changeType(this.props.state.formType);
     }
     componentDidMount() {
         if (isIOS) {
@@ -49,19 +48,25 @@ export default class CreateNewForm extends Component {
         if (!console.inputRef) return;
         this.needMove = false;
         this.refs.form.getComponent(console.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
+            console.log('py======'+py);
             let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
-            //输入框距离底部的距离小于键盘的高度，需要滑动
-            if (leftHeight < e.startCoordinates.height + 25) {
+            //输入框距离底部的距离小于键盘的高度，需要滑动,36是一行输入框的高度
+            if (leftHeight < e.startCoordinates.height + 36) {
                 this.needMove = true;
                 // 需要移动的距离
-                let moveHeight = 30 + (e.startCoordinates.height - leftHeight);
+                let moveHeight = e.startCoordinates.height + 36 - leftHeight;
                 console.log("this.moveH=" + this.moveH, "this.contentHeight=" + this.contentHeight, "height=" + screenHeight);
 
-                //moveH 异常数据处理
-                if (this.moveH + screenHeight > this.contentHeight) {
-                    this.moveH = this.contentHeight - screenHeight;
+                // moveH 异常数据处理
+                if (screenHeight > this.contentHeight) {
+                    this.moveH = 0;
+                } else if (this.moveH + py > this.contentHeight) {
+                    this.moveH = this.contentHeight - py;
                     console.log("===error===");
+                } else if (this.moveH + (py - isIOS?64:44) < 0) {
+                    this.moveH = 0;
                 }
+                console.log('moveH==='+this.moveH);
                 this.lastMoveH = this.moveH;
                 this.scrollViewTo(this.lastMoveH + moveHeight);
             }
@@ -96,12 +101,12 @@ export default class CreateNewForm extends Component {
         this.refs.scroll.scrollTo({ y: offsetY, animated: true });
     }
     render() {
-        let { formStruct, formOptions } = this.props.state;
+        let { formStruct, formOptions, formType } = this.props.state;
         return (
             <View style={styles.containerView} >
-                <CreateNavBar onPress={this.onPress.bind(this)} />
+                <CreateNavBar onPress={this.onPress.bind(this)} currentModule={formType} />
                 <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag'
-                    ref='scroll'
+                    ref='scroll' iosalwaysBounceVertical={false} iosbounces={false}
                     onContentSizeChange={(contentWidth, contentHeight) => {
                         this.contentHeight = parseInt(contentHeight);
                     }}

@@ -20,6 +20,7 @@ import TabIcon from './tabIcon';
 import PasswordList from '../../PasswordList';
 import CreatePassword from '../../CreatePassword';
 import Setting from '../../Setting';
+import ChoosePasswordType from '../../ChoosePasswordType';
 
 export default class app extends Component {
     constructor(props) {
@@ -49,6 +50,7 @@ export default class app extends Component {
                             icon={TabIcon}  navigationBarStyle={NavigationStyles.systemNavigatorStyle}
                             titleStyle={NavigationStyles.systemTitleStyle} />
                     </Scene>
+                    <Scene key="choosePasswordType" title="选择账号模板" component={ChoosePasswordType} hideNavBar={true} hideTabBar={true} />
                 </RouterWithRedux>
             </Provider>
         )

@@ -1,8 +1,10 @@
 import * as types from './actionTypes';
 import realm from '../../Realm/realm';
 import tForm from 'tcomb-form-native';
-import fieldNameDict from '../containers/fieldsName';
+import fieldsName from '../containers/fieldsName';
 
+let typeKeys = realm.objects('TypeKeys');
+let lastedPrimaryKey = realm.objects('LastedPrimaryKey');
 let passwordTypes = realm.objects('PasswordTypes');
 
 export function changeType(formType) {
@@ -60,9 +62,9 @@ function formFormatFunction(element) {
 function fieldNameFunction(element, formType) {
     let name;
     if (element != 'serverProvider') {
-        name = fieldNameDict[element];
+        name = fieldsName.fieldsNameDict[element];
     } else {
-        name = fieldNameDict['' + element + formType];
+        name = fieldsName.fieldsNameDict['' + element + formType];
     }
     if (!name) {
         name = '未知';
@@ -74,3 +76,34 @@ function fieldNameFunction(element, formType) {
         }
     }
 }
+
+function getNewPrimaryId() {
+        let primaryKey = lastedPrimaryKey[0];
+        let tempKey = primaryKey.lastedId + 1;
+        realm.write(() => {
+            realm.create('LastedPrimaryKey', {
+                id: primaryKey.id, lastedId: tempKey
+            }, true);
+        });
+        return tempKey;
+    }
+export function addWebsite(value) {
+        let newPrimaryId = getNewPrimaryId();
+        let server = '' + serverProvider + newPrimaryId;
+        realm.write(() => {
+            realm.create('PasswordItems', {
+                id: newPrimaryId, typeName: '网站', serverProvider: server, passwordType: 0,
+                creationDate: new Date(), description: description, userName: userName
+            });
+        });
+    }
+export function addNoteBook(value) {
+        let newPrimaryId = getNewPrimaryId();
+        let server = '' + serverProvider + newPrimaryId;
+        realm.write(() => {
+            realm.create('PasswordItems', {
+                id: newPrimaryId, typeName: '记事本', serverProvider: server, passwordType: 5,
+                creationDate: new Date(), description: description,
+            });
+        });
+    }

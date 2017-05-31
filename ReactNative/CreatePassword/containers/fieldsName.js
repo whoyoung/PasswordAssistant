@@ -1,4 +1,4 @@
-let nameDict = {
+let fieldsNameDict = {
     serverProvider0: '网站名称 (必填)',
     serverProvider1: '银行名称 (必填)',
     serverProvider2: '社交账号名称 (必填)',
@@ -42,4 +42,12 @@ let nameDict = {
     credentialsDate: '证件有效期'
 }
 
-export default nameDict;
+let moduleNameDict = {
+    website: '网站',
+    bank: '银行卡',
+    social: '社交账号',
+    contact: '联系人',
+    credentials: '证件',
+    notebook: '记事本'
+}
+export default {fieldsNameDict, moduleNameDict};

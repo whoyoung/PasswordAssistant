@@ -5,16 +5,25 @@ import ReactNative, {
     Text,
     View,
 } from 'react-native';
-import navigationStyles from '../../Entrance/NavigationElement/navigationStyles'
+import navigationStyles from '../../Entrance/NavigationElement/navigationStyles';
+import { Actions } from 'react-native-router-flux';
+
 export default class CreateFormNavigation extends Component {
     constructor(props) {
         super();
     }
 
+    _chooseModule() {
+        let { currentModule } = this.props;
+        Actions.choosePasswordType({currentModule:currentModule});
+    }
+
     render() {
         return (
             <View style={[styles.titleView, navigationStyles.systemNavigatorStyle]}>
-                <Text style={styles.titleText} >模板</Text>
+                <Text style={styles.titleText} onPress={() => { this._chooseModule() }} >
+                    模板
+                </Text>
                 <Text style={styles.titleText} >新建账号</Text>
                 <Text style={styles.titleText} onPress={this.props.onPress} >保存</Text>
             </View>

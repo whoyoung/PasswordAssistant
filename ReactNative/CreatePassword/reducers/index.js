@@ -2,10 +2,9 @@
 import * as types from '../actions/actionTypes';
 
 const initState = {
-    formType: 0,
+    formType: 1,
     formStruct: {},
     formOptions: {},
-    inputRef: null
 }
 
 export default function reducers(state = initState, action = {}) {
@@ -24,12 +23,7 @@ export default function reducers(state = initState, action = {}) {
                 formStruct: action.formStruct,
                 formOptions: action.formOptions
             }
-        case 'yh_createPassword_inputRef': {
-            return {
-                ...state,
-                inputRef: action.inputRef,
-            }
-        }
+        
 
         default:
             return state;
