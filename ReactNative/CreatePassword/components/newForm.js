@@ -29,7 +29,7 @@ export default class CreateNewForm extends Component {
         this.needMove = false;//弹出键盘时，inputRef是否需要滑动
     }
     componentWillMount() {
-        this.props.actions.changeType(this.props.state.formType);
+        this.changeFormType(0);
     }
     componentDidMount() {
         if (isIOS) {
@@ -48,7 +48,7 @@ export default class CreateNewForm extends Component {
         if (!console.inputRef) return;
         this.needMove = false;
         this.refs.form.getComponent(console.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
-            console.log('py======'+py);
+            console.log('py======' + py);
             let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
             //输入框距离底部的距离小于键盘的高度，需要滑动,36是一行输入框的高度
             if (leftHeight < e.startCoordinates.height + 36) {
@@ -63,10 +63,10 @@ export default class CreateNewForm extends Component {
                 } else if (this.moveH + py > this.contentHeight) {
                     this.moveH = this.contentHeight - py;
                     console.log("===error===");
-                } else if (this.moveH + (py - isIOS?64:44) < 0) {
+                } else if (this.moveH + (py - isIOS ? 64 : 44) < 0) {
                     this.moveH = 0;
                 }
-                console.log('moveH==='+this.moveH);
+                console.log('moveH===' + this.moveH);
                 this.lastMoveH = this.moveH;
                 this.scrollViewTo(this.lastMoveH + moveHeight);
             }
@@ -79,7 +79,7 @@ export default class CreateNewForm extends Component {
         }
         console.inputRef = null;
     }
-    
+
     onChange(value, path) {
         // if (path.indexOf('rememberMe') >= 0)
     }
@@ -96,7 +96,12 @@ export default class CreateNewForm extends Component {
     clearForm() {
         // this.setState({ ...defaultState });
     }
-
+    changeFormType(formType) {
+        if (formType != this.props.state.formType) {
+            this.props.actions.changeType(formType);
+        }
+        
+    }
     scrollViewTo(offsetY) {
         this.refs.scroll.scrollTo({ y: offsetY, animated: true });
     }
@@ -104,7 +109,7 @@ export default class CreateNewForm extends Component {
         let { formStruct, formOptions, formType } = this.props.state;
         return (
             <View style={styles.containerView} >
-                <CreateNavBar onPress={this.onPress.bind(this)} currentModule={formType} />
+                <CreateNavBar onPress={this.onPress.bind(this)} currentModule={formType} changeFormType={this.changeFormType.bind(this)} />
                 <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag'
                     ref='scroll' iosalwaysBounceVertical={false} iosbounces={false}
                     onContentSizeChange={(contentWidth, contentHeight) => {

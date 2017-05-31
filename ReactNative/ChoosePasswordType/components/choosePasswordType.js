@@ -38,7 +38,11 @@ export default class ChoosePasswordType extends Component {
                         取消
                     </Text>
                     <Text style={styles.titleText} >选择账号模板</Text>
-                    <Text style={styles.titleText} onPress={this.props.onPress} >确定</Text>
+                    <Text style={styles.titleText} onPress={() => {
+                        Actions.pop();
+                        this.props.changeFormType(formType);
+                        }} >确定
+                    </Text>
                 </View>
 
                 <FlatList

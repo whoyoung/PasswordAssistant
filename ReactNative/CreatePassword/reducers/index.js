@@ -2,7 +2,7 @@
 import * as types from '../actions/actionTypes';
 
 const initState = {
-    formType: 1,
+    formType: null,
     formStruct: {},
     formOptions: {},
 }

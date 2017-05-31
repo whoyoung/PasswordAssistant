@@ -14,8 +14,8 @@ export default class CreateFormNavigation extends Component {
     }
 
     _chooseModule() {
-        let { currentModule } = this.props;
-        Actions.choosePasswordType({currentModule:currentModule});
+        let { currentModule, changeFormType } = this.props;
+        Actions.choosePasswordType({currentModule:currentModule, changeFormType:changeFormType});
     }
 
     render() {
