@@ -39,14 +39,15 @@ export default class app extends Component {
                 <RouterWithRedux>
                     <Scene key="yh_tabs" initial={true} tabs={true} tabBarStyle={styles.tabBarStyle}
                         tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
-                        navigationBarStyle={NavigationStyles.systemNavigatorStyle}
-                        titleStyle={NavigationStyles.systemTitleStyle} >
+                    >
                         <Scene key="passwordList" initial={true} title="账号列表" component={PasswordList} hideNavBar={false} hideTabBar={false}
-                            icon={TabIcon} />
-                        <Scene key="createPassword" title="新建账号" component={CreatePassword} hideNavBar={false} hideTabBar={false}
+                            icon={TabIcon} navigationBarStyle={NavigationStyles.systemNavigatorStyle}
+                            titleStyle={NavigationStyles.systemTitleStyle} />
+                        <Scene key="createPassword" title="新建账号" component={CreatePassword} hideNavBar={true} hideTabBar={false}
                             icon={TabIcon} />
                         <Scene key="setting" title="设置" component={Setting} hideNavBar={false} hideTabBar={false}
-                            icon={TabIcon} />
+                            icon={TabIcon}  navigationBarStyle={NavigationStyles.systemNavigatorStyle}
+                            titleStyle={NavigationStyles.systemTitleStyle} />
                     </Scene>
                 </RouterWithRedux>
             </Provider>

@@ -10,61 +10,18 @@ import ReactNative, {
     Dimensions,
     Platform
 } from 'react-native';
+import CreateNavBar from './navgationView';
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
-// RealForm.i18n.optional = ' (选填)';
-// RealForm.i18n.required = ' (必填)';
 let screenHeight = Dimensions.get('window').height - 64;
 import realm from '../../Realm/realm';
 let typeKeys = realm.objects('TypeKeys');
 let lastedPrimaryKey = realm.objects('LastedPrimaryKey');
 let isIOS = Platform.OS !== 'android';
 
-export default class TcombFormNativeDemo extends Component {
+export default class CreateNewForm extends Component {
     constructor(props) {
         super();
-        // this.state = {
-        //     value: {},
-        //     type: this.getFormType(),
-        //     options: {
-        //         fields: {
-        //             birthday: {
-        //                 config: {
-        //                     animationConfig: {
-        //                         duration: 500
-        //                     },
-        //                     format: (date) => {
-        //                         return date.toLocaleString()
-        //                     }
-        //                 },
-
-        //             },
-        //             name: {
-        //                 label: '姓名'
-        //             }
-        //         }
-        //     }
-        // };
-
-        // this.options = {
-        //     fields: {
-        //         serverProvider: {
-        //             label: 'serverProvider',
-        //             onFocus: () => {
-        //                 this.inputRef = 'serverProvider';
-        //                 console.log('inputref------' + this.inputRef);
-        //             }
-        //         },
-        //         description: {
-        //             label: 'description',
-        //             onFocus: () => {
-        //                 this.inputRef = 'description';
-        //                 console.log('description------' + this.inputRef);
-        //             }
-        //         }
-        //     }
-        // }
-
         //多textInput,键盘遮挡解决方案http://www.voidcn.com/blog/hsbirenjie/article/p-6402538.html
         this.contentHeight = 0;
         console.inputRef = null;//当前编辑的textInput
@@ -72,12 +29,10 @@ export default class TcombFormNativeDemo extends Component {
         this.lastMoveH = 0;//保留上次滑动的距离
         this.needMove = false;//弹出键盘时，inputRef是否需要滑动
     }
-
     componentWillMount() {
         this.props.actions.changeType(1);
     }
     componentDidMount() {
-        // this.refs.form.getComponent('age').refs.input.focus();
         if (isIOS) {
             this.subscriptions = [
                 Keyboard.addListener('keyboardDidShow', this._keyboardDidShow),
@@ -119,37 +74,19 @@ export default class TcombFormNativeDemo extends Component {
         }
         console.inputRef = null;
     }
-    // onChange(value, path) {
-    // if (path.indexOf('rememberMe') >= 0) {
-    //   let options = tForm.update(this.state.options, {
-    //     fields: {
-    //       name: {
-    //         editable: { '$set': !value.rememberMe }
-    //       }
-    //     }
-    //   })
-    //   this.setState({ options: options, value: value });
-    // } else {
-    //   this.setState({ value: value });
-    // }
-    // }
+    
     onChange(value, path) {
-        console.log('====================================value');
-        console.log(JSON.stringify(value));
-        console.log('====================================');
-        // if (path.indexOf('name') >= 0 && value.name !== this.state.value.name) {
-        //     let formType = this.getFormType(value.name);
-        //     this.setState({ value, type: formType });
-        // } else {
-        //     this.setState({ value });
-        // }
+        // if (path.indexOf('rememberMe') >= 0)
     }
     onPress() {
         let value = this.refs.form.getValue();
-        if (value) {
-            console.log(value);
-            this.clearForm();
+        if (!value || !value.serverProvider) {
+            alert('必填项不能为空');
+            return;
         }
+        console.log('====================================value');
+        console.log(value);
+        console.log('====================================');
     }
     clearForm() {
         // this.setState({ ...defaultState });
@@ -161,30 +98,37 @@ export default class TcombFormNativeDemo extends Component {
     render() {
         let { formStruct, formOptions } = this.props.state;
         return (
-            <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag'
-                ref='scroll'
-                onContentSizeChange={(contentWidth, contentHeight) => {
-                    this.contentHeight = parseInt(contentHeight);
-                }}
-                onScrollEndDrag={(e) => {
-                    this.moveH = e.nativeEvent.contentOffset.y;
-                }} >
-                <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
-                    options={formOptions} />
-                <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
-                    <Text style={styles.buttonText}>Save</Text>
-                </TouchableHighlight>
-            </ScrollView>
+            <View style={styles.containerView} >
+                <CreateNavBar onPress={this.onPress.bind(this)} />
+                <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag'
+                    ref='scroll'
+                    onContentSizeChange={(contentWidth, contentHeight) => {
+                        this.contentHeight = parseInt(contentHeight);
+                    }}
+                    onScrollEndDrag={(e) => {
+                        this.moveH = e.nativeEvent.contentOffset.y;
+                    }} >
+                    <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
+                        options={formOptions} />
+                    <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
+                        <Text style={styles.buttonText}>Save</Text>
+                    </TouchableHighlight>
+                </ScrollView>
+            </View>
+
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingTop: 64 + 15,
-        paddingHorizontal: 15,
+    containerView: {
+        flex: 1,
         paddingBottom: 40,
         backgroundColor: '#F5FCFF',
+    },
+    container: {
+        padding: 15,
+        backgroundColor: '#F5FCFF'
     },
     button: {
         height: 36,
