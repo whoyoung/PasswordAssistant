@@ -26,9 +26,9 @@ PasswordItems.schema = {
         userName: { type: 'string', optional: true },//用户名
         loginAccount: { type: 'string', optional: true },//登陆账号
         loginPassword: { type: 'string', optional: true },//登录密码
-        mobilePhone: { type: 'string', optional: true },//移动电话
+        mobilePhone: { type: 'int', optional: true },//移动电话
 
-        bankCardNum: { type: 'string', optional: true },//银行卡号
+        bankCardNum: { type: 'int', optional: true },//银行卡号
         bankBranch: { type: 'string', optional: true },//支行名称
         bankSubsidiaryCity: { type: 'string', optional: true },//开户行所属城市
         bankReservedInfo: { type: 'string', optional: true },//银行预留信息
@@ -42,8 +42,8 @@ PasswordItems.schema = {
         UShieldPaymentPassword: { type: 'string', optional: true },//U盾支付密码
 
         detailAddress: { type: 'string', optional: true }, //详细地址
-        zipCode: { type: 'string', optional: true },//邮编
-        telephone: { type: 'string', optional: true },//固定电话
+        zipCode: { type: 'int', optional: true },//邮编
+        telephone: { type: 'int', optional: true },//固定电话
 
         company: { type: 'string', optional: true },//公司
         post: { type: 'string', optional: true },//职位
@@ -51,7 +51,7 @@ PasswordItems.schema = {
         lunarCalendarBirthday: { type: 'string', optional: true },//农历生日
 
         credentialsOwner: { type: 'string', optional: true },//证件持有人
-        credentialsNum: { type: 'string', optional: true },//证件号码
+        credentialsNum: { type: 'int', optional: true },//证件号码
         credentialsPassword: { type: 'string', optional: true },//证件密码
         credentialsAddress: { type: 'string', optional: true },//证件地址
         credentialsDate: { type: 'string', optional: true },//证件有效期

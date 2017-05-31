@@ -14,7 +14,7 @@ import CreateNavBar from './navgationView';
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
 let screenHeight = Dimensions.get('window').height;
-import realm from '../../Realm/realm';
+import * as createActions from '../actions/actions'
 
 let isIOS = Platform.OS !== 'android';
 
@@ -80,27 +80,25 @@ export default class CreateNewForm extends Component {
         console.inputRef = null;
     }
 
-    onChange(value, path) {
-        // if (path.indexOf('rememberMe') >= 0)
-    }
-    onPress() {
+    savePassword() {
         let value = this.refs.form.getValue();
         if (!value || !value.serverProvider) {
             alert('必填项不能为空');
             return;
         }
-        console.log('====================================value');
-        console.log(value);
-        console.log('====================================');
+        createActions.savePassword(this.props.state.formType,value);
+
     }
-    clearForm() {
-        // this.setState({ ...defaultState });
+    clearForm(formType) {
+        this.props.actions.changeType(formType);
     }
     changeFormType(formType) {
         if (formType != this.props.state.formType) {
             this.props.actions.changeType(formType);
         }
-        
+    }
+    onChange(value, path) {
+
     }
     scrollViewTo(offsetY) {
         this.refs.scroll.scrollTo({ y: offsetY, animated: true });
@@ -109,7 +107,7 @@ export default class CreateNewForm extends Component {
         let { formStruct, formOptions, formType } = this.props.state;
         return (
             <View style={styles.containerView} >
-                <CreateNavBar onPress={this.onPress.bind(this)} currentModule={formType} changeFormType={this.changeFormType.bind(this)} />
+                <CreateNavBar savePassword={this.savePassword.bind(this)} currentModule={formType} changeFormType={this.changeFormType.bind(this)} />
                 <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag'
                     ref='scroll' iosalwaysBounceVertical={false} iosbounces={false}
                     onContentSizeChange={(contentWidth, contentHeight) => {
@@ -120,9 +118,6 @@ export default class CreateNewForm extends Component {
                     }} >
                     <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
                         options={formOptions} />
-                    <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
-                        <Text style={styles.buttonText}>Save</Text>
-                    </TouchableHighlight>
                 </ScrollView>
             </View>
 

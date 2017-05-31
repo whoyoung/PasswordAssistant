@@ -77,33 +77,34 @@ function fieldNameFunction(element, formType) {
     }
 }
 
+export function savePassword(formType, value) {
+    let newPrimaryId = getNewPrimaryId();
+    let campareStr = 'typeKey = ' + formType;
+    let passwordType = passwordTypes.filtered(campareStr);
+    let fielArray = JSON.parse(passwordType[0].typeFiels);
+    let createDict = {
+        id: newPrimaryId,
+        passwordType: formType,
+        creationDate: new Date()
+    }
+    fielArray.forEach(function (element) {
+        createDict[element] = value[element];
+    }, this);
+    writeTransation(createDict);
+}
+
 function getNewPrimaryId() {
-        let primaryKey = lastedPrimaryKey[0];
-        let tempKey = primaryKey.lastedId + 1;
-        realm.write(() => {
-            realm.create('LastedPrimaryKey', {
-                id: primaryKey.id, lastedId: tempKey
-            }, true);
-        });
-        return tempKey;
-    }
-export function addWebsite(value) {
-        let newPrimaryId = getNewPrimaryId();
-        let server = '' + serverProvider + newPrimaryId;
-        realm.write(() => {
-            realm.create('PasswordItems', {
-                id: newPrimaryId, typeName: '网站', serverProvider: server, passwordType: 0,
-                creationDate: new Date(), description: description, userName: userName
-            });
-        });
-    }
-export function addNoteBook(value) {
-        let newPrimaryId = getNewPrimaryId();
-        let server = '' + serverProvider + newPrimaryId;
-        realm.write(() => {
-            realm.create('PasswordItems', {
-                id: newPrimaryId, typeName: '记事本', serverProvider: server, passwordType: 5,
-                creationDate: new Date(), description: description,
-            });
-        });
-    }
+    let primaryKey = lastedPrimaryKey[0];
+    let tempKey = primaryKey.lastedId + 1;
+    realm.write(() => {
+        realm.create('LastedPrimaryKey', {
+            id: primaryKey.id, lastedId: tempKey
+        }, true);
+    });
+    return tempKey;
+}
+function writeTransation(createDict) {
+    return realm.write(() => {
+        realm.create('PasswordItems', createDict);
+    });
+}

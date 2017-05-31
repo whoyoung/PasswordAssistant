@@ -25,7 +25,7 @@ export default class CreateFormNavigation extends Component {
                     模板
                 </Text>
                 <Text style={styles.titleText} >新建账号</Text>
-                <Text style={styles.titleText} onPress={this.props.onPress} >保存</Text>
+                <Text style={styles.titleText} onPress={() => { this.props.savePassword()} } >保存</Text>
             </View>
         )
 
