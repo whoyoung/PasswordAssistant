@@ -22,10 +22,15 @@ export default class ChoosePasswordType extends Component {
         let TypeKey = typeKeys[0];
         typeData = JSON.parse(TypeKey.typeList);
     }
-
+    _changeRow(rowType) {
+        if (rowType != this.props.state.formType) {
+            this.props.actions.changeType(rowType);
+        }
+        
+    }
 
     render() {
-        let {formType} = this.props.state;
+        let { formType } = this.props.state;
         return (
             <View style={styles.container} >
                 <View style={[styles.titleView, navigationStyles.systemNavigatorStyle]}>
@@ -39,9 +44,9 @@ export default class ChoosePasswordType extends Component {
                 <FlatList
                     data={typeData}
                     renderItem={({ item }) => {
-                        return <TypeRow item={item} formType={formType} />
+                        return <TypeRow item={item} formType={formType} changeRow={this._changeRow.bind(this)} />
                     }}
-                    ItemSeparatorComponent = {()=>{return <View style={styles.separatorLine} />}}
+                    ItemSeparatorComponent={() => { return <View style={styles.separatorLine} /> }}
                 />
             </View>
 
@@ -68,7 +73,6 @@ const styles = StyleSheet.create({
     },
     separatorLine: {
         height: 0.5,
-        backgroundColor:'gray',
-        marginHorizontal: 15
+        backgroundColor: 'gray',
     }
 });

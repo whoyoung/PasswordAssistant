@@ -4,13 +4,15 @@ import ReactNative, {
     StyleSheet,
     Text,
     View,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import fieldsName from '../../CreatePassword/containers/fieldsName'
 
 export default class TypeRow extends Component {
+    
     render() {
-        let { item, formType } = this.props;
+        let { item, formType, changeRow } = this.props;
         let value;
         if (fieldsName.moduleNameDict[item.value]) {
             value = fieldsName.moduleNameDict[item.value];
@@ -18,12 +20,18 @@ export default class TypeRow extends Component {
             value = item.value;
         }
         return (
-            <View style={styles.container} >
-                <Text style={styles.titleText} >{value}</Text>
-                <Image resizeMode={'contain'} style={styles.arrowImage}
-                    source={require('../images/list_arrow@3x.png')}
-                />
-            </View>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => changeRow(item.key)} >
+                <View style={styles.container} >
+                    <Text style={styles.titleText} >{value}</Text>
+                    {
+                        formType == item.key ?
+                            <Image resizeMode={'contain'} style={styles.arrowImage}
+                                source={require('../images/list_arrow@3x.png')}
+                            /> : null
+                    }
+
+                </View>
+            </TouchableOpacity>
         )
     }
 }
@@ -43,6 +51,6 @@ const styles = StyleSheet.create({
     },
     arrowImage: {
         height: 9,
-        width: 5.5,
+        width: 13,
     },
 });
