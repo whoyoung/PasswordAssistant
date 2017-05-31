@@ -67,7 +67,7 @@ export default class TcombFormNativeDemo extends Component {
 
         //多textInput,键盘遮挡解决方案http://www.voidcn.com/blog/hsbirenjie/article/p-6402538.html
         this.contentHeight = 0;
-        this.inputRef = null;//当前编辑的textInput
+        console.inputRef = null;//当前编辑的textInput
         this.moveH = 0;//ScrollView滑动的距离
         this.lastMoveH = 0;//保留上次滑动的距离
         this.needMove = false;//弹出键盘时，inputRef是否需要滑动
@@ -91,10 +91,9 @@ export default class TcombFormNativeDemo extends Component {
         }
     }
     _keyboardDidShow = (e) => {
-        this.inputRef = console.inputRef;
-        if (!this.inputRef) return;
+        if (!console.inputRef) return;
         this.needMove = false;
-        this.refs.form.getComponent(this.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
+        this.refs.form.getComponent(console.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
             let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
             //输入框距离底部的距离小于键盘的高度，需要滑动
             if (leftHeight < e.startCoordinates.height + 25) {
@@ -109,16 +108,16 @@ export default class TcombFormNativeDemo extends Component {
                     console.log("===error===");
                 }
                 this.lastMoveH = this.moveH;
-                this.refs.scroll.scrollTo({ y: this.moveH + moveHeight, x: 0 });
+                this.scrollViewTo(this.lastMoveH + moveHeight);
             }
         });
     }
 
     _keyboardDidHide = () => {
         if (this.needMove) {
-            this.refs.scroll.scrollTo({ y: this.lastMoveH, x: 0 });
+            this.scrollViewTo(this.lastMoveH);
         }
-        this.inputRef = null;
+        console.inputRef = null;
     }
     // onChange(value, path) {
     // if (path.indexOf('rememberMe') >= 0) {
