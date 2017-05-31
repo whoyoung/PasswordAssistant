@@ -86,8 +86,9 @@ export default class CreateNewForm extends Component {
             alert('必填项不能为空');
             return;
         }
-        createActions.savePassword(this.props.state.formType,value);
-
+        let { formType } = this.props.state
+        createActions.savePassword(formType, value);
+        this.clearForm(formType);
     }
     clearForm(formType) {
         this.props.actions.changeType(formType);
