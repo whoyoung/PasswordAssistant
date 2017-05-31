@@ -8,7 +8,7 @@ let passwordTypes = realm.objects('PasswordTypes');
 export function changeType(formType) {
     let { formStruct, formOptions } = formStructFunction(formType);
     return {
-        type: types.yh_createPassword_clearForm,
+        type: types.yh_createPassword_changeType,
         formType: formType,
         formStruct: formStruct,
         formOptions: formOptions
@@ -69,17 +69,8 @@ function fieldNameFunction(element, formType) {
     }
     return {
         label: name,
-        onFocus: function () { 
-           return async function (dispatch) {
-                dispatch(inputRefFunction(element))
-            }}
-    };
-}
-
-export function inputRefFunction(element) {
-    console.log('yh_createPassword_inputRef');
-    return {
-        type: types.yh_createPassword_inputRef,
-        inputRef: element
+        onFocus: () => {
+            console.inputRef = element;
+        }
     }
 }

@@ -91,10 +91,10 @@ export default class TcombFormNativeDemo extends Component {
         }
     }
     _keyboardDidShow = (e) => {
-        console.log('inputRef======'+this.inputRef);
-        if (!this.props.state.inputRef) return;
+        this.inputRef = console.inputRef;
+        if (!this.inputRef) return;
         this.needMove = false;
-        this.refs.form.getComponent(this.props.state.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
+        this.refs.form.getComponent(this.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
             let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
             //输入框距离底部的距离小于键盘的高度，需要滑动
             if (leftHeight < e.startCoordinates.height + 25) {
@@ -161,9 +161,6 @@ export default class TcombFormNativeDemo extends Component {
     }
     render() {
         let { formStruct, formOptions } = this.props.state;
-        console.log('====================================formOptions');
-        console.log(JSON.stringify(formOptions));
-        console.log('====================================');
         return (
             <ScrollView contentContainerStyle={styles.container} keyboardDismissMode='on-drag'
                 ref='scroll'
@@ -183,7 +180,6 @@ export default class TcombFormNativeDemo extends Component {
     }
 }
 
-// options={this.state.options} value={this.state.value}
 const styles = StyleSheet.create({
     container: {
         paddingTop: 64 + 15,
