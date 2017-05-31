@@ -8,6 +8,7 @@ import ReactNative, {
 } from 'react-native';
 import navigationStyles from '../../Entrance/NavigationElement/navigationStyles';
 import { Actions } from 'react-native-router-flux';
+import TypeRow from './typeRow'
 import realm from '../../Realm/realm';
 let typeKeys = realm.objects('TypeKeys');
 let typeData = [];
@@ -24,8 +25,9 @@ export default class ChoosePasswordType extends Component {
 
 
     render() {
+        let {formType} = this.props.state;
         return (
-            <View style={styles.flexDirection} >
+            <View style={styles.container} >
                 <View style={[styles.titleView, navigationStyles.systemNavigatorStyle]}>
                     <Text style={styles.titleText} onPress={() => { Actions.pop() }} >
                         取消
@@ -37,8 +39,9 @@ export default class ChoosePasswordType extends Component {
                 <FlatList
                     data={typeData}
                     renderItem={({ item }) => {
-                        return <Text style={styles.titleText}>{item.value}</Text>
+                        return <TypeRow item={item} formType={formType} />
                     }}
+                    ItemSeparatorComponent = {()=>{return <View style={styles.separatorLine} />}}
                 />
             </View>
 
@@ -63,4 +66,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'black',
     },
+    separatorLine: {
+        height: 0.5,
+        backgroundColor:'gray',
+        marginHorizontal: 15
+    }
 });
