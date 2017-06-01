@@ -8,7 +8,8 @@ import ReactNative, {
 } from 'react-native';
 import navigationStyles from '../../Entrance/NavigationElement/navigationStyles';
 import { Actions } from 'react-native-router-flux';
-import TypeRow from './typeRow'
+import TypeRow from './typeRow';
+import SeparatorLine from './separatorLine'
 import realm from '../../Realm/realm';
 let typeKeys = realm.objects('TypeKeys');
 let typeData = [];
@@ -50,7 +51,7 @@ export default class ChoosePasswordType extends Component {
                     renderItem={({ item }) => {
                         return <TypeRow item={item} formType={formType} changeRow={this._changeRow.bind(this)} />
                     }}
-                    ItemSeparatorComponent={() => { return <View style={styles.separatorLine} /> }}
+                    ItemSeparatorComponent={() => { return <SeparatorLine /> }}
                 />
             </View>
 

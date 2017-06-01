@@ -12,6 +12,8 @@ import {
 
 import realm from '../../Realm/realm';
 import { ListView } from 'realm/react-native';
+import ListHeader from './listHeader'
+import ListRow from './listRow'
 
 export default class passwordList extends React.Component {
     constructor(props) {
@@ -186,10 +188,10 @@ export default class passwordList extends React.Component {
             this.showView = (<ListView stype={{ marginTop: 15 }}
                 dataSource={this.ds.cloneWithRowsAndSections(data)}
                 renderRow={(rowData, sectionId, rowId) => {
-                    return <Text>{rowData.serverProvider}</Text>
+                    return <ListRow serverProvider={rowData.serverProvider} />
                 }}
                 renderSectionHeader={(sectionData, sectionID) => {
-                    return <Text>{sectionID}</Text>
+                    return <ListHeader sectionID={sectionID} />
                 }}
             />);
         } else {
@@ -198,16 +200,6 @@ export default class passwordList extends React.Component {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.initText} onPress={() => {
-                    this._addWebsite('website', '这是网站', 'whoyoung');
-                }} >
-                    新建网站账号
-                </Text>
-                <Text style={styles.initText} onPress={() => {
-                    this._addNoteBook('noteBook', '这是记事本', 'yagnhu');
-                }} >
-                    新建备忘录
-                </Text>
                 {this.showView}
             </View>
         );
@@ -217,8 +209,7 @@ export default class passwordList extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 64,
-        padding: 15
+        marginTop: 64
     },
     initText: {
         color: 'gray',
