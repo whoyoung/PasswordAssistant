@@ -3,20 +3,25 @@ import React, { Component } from 'react';
 import ReactNative, {
     StyleSheet,
     Text,
-    View
+    View,
+    TouchableOpacity
 } from 'react-native';
 import SeparatorLine from '../../ChoosePasswordType/components/separatorLine'
+import { Actions } from 'react-native-router-flux';
 
 export default class TypeRow extends Component {
+    goPasswordDetail() {
+        Actions.passwordDetail({ rowData: this.props.rowData });
+    }
     render() {
-        let { serverProvider } = this.props;
+        let { rowData } = this.props;
         return (
-            <View>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => this.goPasswordDetail()} >
                 <View style={styles.textView} >
-                    <Text style={styles.titleText} >{serverProvider}</Text>
+                    <Text style={styles.titleText} >{rowData.serverProvider}</Text>
                 </View>
                 <SeparatorLine />
-            </View>
+            </TouchableOpacity>
         )
     }
 }

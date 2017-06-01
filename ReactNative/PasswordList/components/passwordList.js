@@ -188,7 +188,7 @@ export default class passwordList extends React.Component {
             this.showView = (<ListView stype={{ marginTop: 15 }}
                 dataSource={this.ds.cloneWithRowsAndSections(data)}
                 renderRow={(rowData, sectionId, rowId) => {
-                    return <ListRow serverProvider={rowData.serverProvider} />
+                    return <ListRow rowData={rowData} />
                 }}
                 renderSectionHeader={(sectionData, sectionID) => {
                     return <ListHeader sectionID={sectionID} />

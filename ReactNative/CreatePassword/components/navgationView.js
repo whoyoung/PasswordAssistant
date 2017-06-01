@@ -4,10 +4,11 @@ import ReactNative, {
     StyleSheet,
     Text,
     View,
+    Platform
 } from 'react-native';
 import navigationStyles from '../../Entrance/NavigationElement/navigationStyles';
 import { Actions } from 'react-native-router-flux';
-
+let isIOS = Platform.OS !== 'android';
 export default class CreateFormNavigation extends Component {
     constructor(props) {
         super();
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: 20,
+        paddingTop: isIOS?20:0,
         paddingHorizontal: 5
     },
     titleText: {
