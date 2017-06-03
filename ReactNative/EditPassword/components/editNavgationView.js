@@ -6,11 +6,14 @@ import ReactNative, {
     View,
     Platform,
     TouchableOpacity,
-    Image
+    Image,
+    Dimensions
 } from 'react-native';
 import navigationStyles from '../../Entrance/NavigationElement/navigationStyles';
 import { Actions } from 'react-native-router-flux';
 let isIOS = Platform.OS !== 'android';
+let {width} = Dimensions.get('window');
+
 export default class CreateFormNavigation extends Component {
     constructor(props) {
         super();
@@ -24,9 +27,9 @@ export default class CreateFormNavigation extends Component {
                         source={require('../../Entrance/NavigationElement/images/nav_bar_back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={styles.titleText} >编辑{this.props.navTitle}</Text>
+                <Text numberOfLines={1} style={[styles.titleText,{maxWidth:width-110} ]} >编辑{this.props.navTitle}</Text>
                 <TouchableOpacity style={styles.editView} onPress={() => { this.props.savePassword() }} >
-                    <Text style={[styles.titleText,{textAlign:'right'}]}  >保存</Text>
+                    <Text style={[styles.titleText]}  >保存</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -45,6 +48,7 @@ const styles = StyleSheet.create({
     titleText: {
         fontSize: 18,
         color: 'black',
+        textAlign:'center'
     },
     backView: {
         width: 44,
