@@ -22,7 +22,7 @@ export default class DetailNavigationView extends Component {
                     />
                 </TouchableOpacity>
                 <Text style={styles.titleText} >{this.props.navTitle}</Text>
-                <TouchableOpacity style={styles.editView} onPress={() => { Actions.pop() }} >
+                <TouchableOpacity style={styles.editView} onPress={() => { this.props.editPassword() }} >
                     <Text style={[styles.titleText,{textAlign:'right'}]}  >编辑</Text>
                 </TouchableOpacity>
             </View>

@@ -7,8 +7,15 @@ import ReactNative, {
 } from 'react-native';
 import fieldsName from '../../CreatePassword/containers/fieldsName'
 import DetailRow from './detailRow';
-import DetailNavigationView from './detailNavigationView'
+import DetailNavigationView from './detailNavigationView';
+import { Actions } from 'react-native-router-flux';
+
 export default class PasswordDetail extends Component {
+
+    editPassword() {
+        alert('llll');
+    }
+
     render() {
         let { rowData } = this.props;
         let keyValueArray = [];
@@ -38,7 +45,8 @@ export default class PasswordDetail extends Component {
         }, this);
         return (
             <View >
-                <DetailNavigationView navTitle={navTitle} />
+                <DetailNavigationView navTitle={navTitle}
+                    editPassword={this.editPassword.bind(this)} />
                 {rowViews}
             </View>
         )
