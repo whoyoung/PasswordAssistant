@@ -4,7 +4,8 @@ import ReactNative, {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 import fieldsName from '../../CreatePassword/containers/fieldsName'
 import DetailRow from './detailRow';
@@ -27,13 +28,28 @@ export default class PasswordDetail extends Component {
     refreshDetail() {
         this.forceUpdate();
     }
+    _deletePassword(rowData) {
+        Alert.alert(
+            '', '确定要删除此账号吗？',
+            [
+                { text: '取消' },
+                {
+                    text: '确定', onPress: () => {
+                        realm.write(() => {
+                            realm.delete(rowData);
+                        });
+                        Actions.pop();
+                    }
+                }
+            ]
+        )
+    }
     render() {
         let { rowData } = this.props;
         let keyValueArray = [];
         let navTitle = '账号详情';
         this.fieldsArray.forEach(function (element) {
             let rowValue = rowData[element];
-            
             if (!rowValue || rowValue == [] || rowValue == {}) {
             } else {
                 if (element == 'serverProvider') {
@@ -52,7 +68,7 @@ export default class PasswordDetail extends Component {
                 <DetailNavigationView navTitle={navTitle}
                     editPassword={this.editPassword.bind(this)} />
                 {rowViews}
-                <TouchableOpacity style={styles.button} opacity={0.5} onPress={() => { alert('delete') }} >
+                <TouchableOpacity style={styles.button} opacity={0.5} onPress={() => { this._deletePassword(rowData) }} >
                     <Text style={styles.buttonText} >删除账号</Text>
                 </TouchableOpacity>
             </View>
