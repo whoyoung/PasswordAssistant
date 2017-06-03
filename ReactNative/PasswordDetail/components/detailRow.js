@@ -32,6 +32,7 @@ export default class DetailRow extends Component {
 const styles = StyleSheet.create({
     container: {
         marginTop: 5,
+        paddingHorizontal: 5
     },
     titleText: {
         fontSize: 18,

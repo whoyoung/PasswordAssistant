@@ -6,12 +6,14 @@ import ReactNative, {
     View
 } from 'react-native';
 import fieldsName from '../../CreatePassword/containers/fieldsName'
-import DetailRow from './detailRow'
+import DetailRow from './detailRow';
+import DetailNavigationView from './detailNavigationView'
 export default class PasswordDetail extends Component {
     render() {
         let { rowData } = this.props;
         let keyValueArray = [];
         let passwordType;
+        let navTitle = '账号详情';
         for (var key in rowData) {
             if (key == 'id' || key == 'creationDate') {
                 continue;
@@ -23,27 +25,27 @@ export default class PasswordDetail extends Component {
             if (rowData.hasOwnProperty(key)) {
                 var element = rowData[key];
                 if (!element || !element.length) continue;
+                if (key == 'serverProvider') {
+                    navTitle = element;
+                }
                 let dict = { key: key, value: element };
                 keyValueArray.push(dict);
             }
         }
-        console.log(keyValueArray);
         let rowViews = [];
-        keyValueArray.forEach(function(element) {
-            rowViews.push(<DetailRow rowDict = {element} passwordType = {passwordType} />);
+        keyValueArray.forEach(function (element) {
+            rowViews.push(<DetailRow rowDict={element} passwordType={passwordType} />);
         }, this);
         return (
-                <View style={styles.container} >
-                    {rowViews}
-                </View>
+            <View >
+                <DetailNavigationView navTitle={navTitle} />
+                {rowViews}
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 15,
-    },
     titleText: {
         fontSize: 18,
         color: 'black',
