@@ -18,7 +18,7 @@ export default class PasswordDetail extends Component {
         this.passwordTypes = realm.objects('PasswordTypes');
         let campareStr = 'typeKey = ' + this.passwordType;
         let passwordType = this.passwordTypes.filtered(campareStr);
-        this.fieldsArray = JSON.parse(passwordType[0].typeFiels);
+        this.fieldsArray = JSON.parse(passwordType[0].typeFields);
     }
 
     editPassword() {

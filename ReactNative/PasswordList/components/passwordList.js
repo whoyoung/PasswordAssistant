@@ -50,7 +50,7 @@ export default class passwordList extends React.Component {
                     ]
                 )
                 realm.create('PasswordTypes', {
-                    id: 0, typeKey: 0, typeFiels: zeroTypeStr
+                    id: 0, typeKey: 0, typeFields: zeroTypeStr
                 });
 
                 let firstTypeStr = JSON.stringify(
@@ -63,7 +63,7 @@ export default class passwordList extends React.Component {
                     ]
                 )
                 realm.create('PasswordTypes', {
-                    id: 1, typeKey: 1, typeFiels: firstTypeStr
+                    id: 1, typeKey: 1, typeFields: firstTypeStr
                 });
 
                 let secondTypeStr = JSON.stringify(
@@ -73,7 +73,7 @@ export default class passwordList extends React.Component {
                     ]
                 )
                 realm.create('PasswordTypes', {
-                    id: 2, typeKey: 2, typeFiels: secondTypeStr
+                    id: 2, typeKey: 2, typeFields: secondTypeStr
                 });
 
                 let thirdTypeStr = JSON.stringify(
@@ -84,7 +84,7 @@ export default class passwordList extends React.Component {
                     ]
                 )
                 realm.create('PasswordTypes', {
-                    id: 3, typeKey: 3, typeFiels: thirdTypeStr
+                    id: 3, typeKey: 3, typeFields: thirdTypeStr
                 });
 
                 let fourthTypeStr = JSON.stringify(
@@ -95,7 +95,7 @@ export default class passwordList extends React.Component {
                     ]
                 )
                 realm.create('PasswordTypes', {
-                    id: 4, typeKey: 4, typeFiels: fourthTypeStr
+                    id: 4, typeKey: 4, typeFields: fourthTypeStr
                 });
                 let fifthTypeStr = JSON.stringify(
                     [
@@ -103,7 +103,7 @@ export default class passwordList extends React.Component {
                     ]
                 )
                 realm.create('PasswordTypes', {
-                    id: 5, typeKey: 5, typeFiels: fifthTypeStr
+                    id: 5, typeKey: 5, typeFields: fifthTypeStr
                 });
             })
         }

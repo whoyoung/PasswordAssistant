@@ -77,7 +77,7 @@ PasswordTypes.schema = {
     properties: {
         id: 'int',
         typeKey: 'int',
-        typeFiels: { type: 'string'}
+        typeFields: { type: 'string'}
     }
 };
 

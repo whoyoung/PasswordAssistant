@@ -36,7 +36,7 @@ function formStructFunction(formType) {
     let formFields = {};
     let campareStr = 'typeKey = ' + formType;
     let passwordType = passwordTypes.filtered(campareStr);
-    let fielArray = JSON.parse(passwordType[0].typeFiels);
+    let fielArray = JSON.parse(passwordType[0].typeFields);
     fielArray.forEach(function (element) {
         formStruct[element] = formFormatFunction(element);
         formFields[element] = fieldNameFunction(element, formType);
@@ -85,7 +85,7 @@ export function savePassword(formType, value) {
     let newPrimaryId = getNewPrimaryId();
     let campareStr = 'typeKey = ' + formType;
     let passwordType = passwordTypes.filtered(campareStr);
-    let fielArray = JSON.parse(passwordType[0].typeFiels);
+    let fielArray = JSON.parse(passwordType[0].typeFields);
     let createDict = {
         id: newPrimaryId,
         passwordType: formType,
