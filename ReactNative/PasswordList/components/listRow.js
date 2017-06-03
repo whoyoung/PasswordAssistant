@@ -40,14 +40,14 @@ export default class ListRow extends Component {
             {
                 text: '删除',
                 backgroundColor: 'purple',
-                color: 'black',
+                color: 'white',
                 onPress: () => { this._deletePassword(rowData) },
                 underlayColor: 'gray'
             },
             {
                 text: '编辑',
                 backgroundColor: 'green',
-                color: 'black',
+                color: 'white',
                 onPress: () => { this._editPassword(rowData) },
                 underlayColor: 'gray'
             }
