@@ -9,6 +9,7 @@
   "dependencies": {
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
+    "react-native-easy-toast": "^1.0.6",
     "react-native-router-flux": "^3.39.1",
     "react-native-swipeout": "^2.1.1",
     "react-redux": "^5.0.5",

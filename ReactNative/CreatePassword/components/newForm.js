@@ -14,7 +14,8 @@ import CreateNavBar from './navgationView';
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
 let screenHeight = Dimensions.get('window').height;
-import * as createActions from '../actions/actions'
+import * as createActions from '../actions/actions';
+import Toast from 'react-native-easy-toast'
 
 let isIOS = Platform.OS !== 'android';
 
@@ -90,6 +91,7 @@ export default class CreateNewForm extends Component {
         createActions.savePassword(formType, value);
         this.clearForm(formType);
         Keyboard.dismiss();
+        this.refs.toast.show('保存成功');
     }
     clearForm(formType) {
         this.props.actions.changeType(formType);
@@ -121,6 +123,7 @@ export default class CreateNewForm extends Component {
                     <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
                         options={formOptions} />
                 </ScrollView>
+                <Toast ref="toast" position='center' />
             </View>
 
         );
