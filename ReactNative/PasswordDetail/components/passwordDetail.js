@@ -6,14 +6,35 @@ import ReactNative, {
     View
 } from 'react-native';
 import fieldsName from '../../CreatePassword/containers/fieldsName'
-
-export default class TypeRow extends Component {
+import DetailRow from './detailRow'
+export default class PasswordDetail extends Component {
     render() {
         let { rowData } = this.props;
-        
+        let keyValueArray = [];
+        let passwordType;
+        for (var key in rowData) {
+            if (key == 'id' || key == 'creationDate') {
+                continue;
+            }
+            if (key == 'passwordType') {
+                passwordType = rowData[key];
+                continue;
+            }
+            if (rowData.hasOwnProperty(key)) {
+                var element = rowData[key];
+                if (!element || !element.length) continue;
+                let dict = { key: key, value: element };
+                keyValueArray.push(dict);
+            }
+        }
+        console.log(keyValueArray);
+        let rowViews = [];
+        keyValueArray.forEach(function(element) {
+            rowViews.push(<DetailRow rowDict = {element} passwordType = {passwordType} />);
+        }, this);
         return (
                 <View style={styles.container} >
-                    <Text style={styles.titleText} >{rowData.serverProvider}</Text>
+                    {rowViews}
                 </View>
         )
     }

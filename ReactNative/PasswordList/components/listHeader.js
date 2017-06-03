@@ -7,7 +7,7 @@ import ReactNative, {
 } from 'react-native';
 import fieldsName from '../../CreatePassword/containers/fieldsName'
 
-export default class TypeRow extends Component {
+export default class ListHeader extends Component {
     render() {
         let { sectionID } = this.props;
         let value;

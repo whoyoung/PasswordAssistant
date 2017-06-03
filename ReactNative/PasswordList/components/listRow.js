@@ -9,7 +9,7 @@ import ReactNative, {
 import SeparatorLine from '../../ChoosePasswordType/components/separatorLine'
 import { Actions } from 'react-native-router-flux';
 
-export default class TypeRow extends Component {
+export default class ListRow extends Component {
     goPasswordDetail() {
         Actions.passwordDetail({ rowData: this.props.rowData });
     }
