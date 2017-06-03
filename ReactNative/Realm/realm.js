@@ -47,6 +47,7 @@ PasswordItems.schema = {
 
         company: { type: 'string', optional: true },//公司
         post: { type: 'string', optional: true },//职位
+        EMail: { type: 'string', optional: true },//邮箱
         solarCalendarBirthday: { type: 'string', optional: true },//阳历生日
         lunarCalendarBirthday: { type: 'string', optional: true },//农历生日
 

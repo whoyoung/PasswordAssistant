@@ -89,6 +89,7 @@ export default class CreateNewForm extends Component {
         let { formType } = this.props.state
         createActions.savePassword(formType, value);
         this.clearForm(formType);
+        Keyboard.dismiss();
     }
     clearForm(formType) {
         this.props.actions.changeType(formType);

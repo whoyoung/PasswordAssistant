@@ -67,7 +67,7 @@ function fieldNameFunction(element, formType) {
         name = fieldsName.fieldsNameDict['' + element + formType];
     }
     if (!name) {
-        name = '未知';
+        name = element;
     }
     return {
         label: name,

@@ -79,7 +79,7 @@ export default class passwordList extends React.Component {
                 let thirdTypeStr = JSON.stringify(
                     [
                         'serverProvider', 'mobilePhone', 'telephone', 'company', 
-                        'post', 'mail', 'lunarCalendarBirthday', 'solarCalendarBirthday',
+                        'post', 'EMail', 'lunarCalendarBirthday', 'solarCalendarBirthday',
                         'detailAddress', 'zipCode', 'description'
                     ]
                 )
@@ -183,7 +183,8 @@ const styles = StyleSheet.create({
     initText: {
         color: 'gray',
         fontSize: 16,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 15
     }
 })
 

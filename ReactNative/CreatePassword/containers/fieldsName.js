@@ -32,6 +32,7 @@ let fieldsNameDict = {
 
     company: '公司',
     post: '职位',
+    EMail: '邮箱',
     solarCalendarBirthday: '阳历生日',
     lunarCalendarBirthday: '农历生日',
 
