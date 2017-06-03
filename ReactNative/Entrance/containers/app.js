@@ -22,6 +22,7 @@ import CreatePassword from '../../CreatePassword';
 import Setting from '../../Setting';
 import ChoosePasswordType from '../../ChoosePasswordType';
 import PasswordDetail from '../../PasswordDetail';
+import EditPassword from '../../EditPassword';
 
 export default class app extends Component {
     constructor(props) {
@@ -53,6 +54,7 @@ export default class app extends Component {
                     </Scene>
                     <Scene key="choosePasswordType" title="选择账号模板" component={ChoosePasswordType} hideNavBar={true} hideTabBar={true} />
                     <Scene key="passwordDetail" title="账号详情" component={PasswordDetail} hideNavBar={true} hideTabBar={true} />
+                    <Scene key="editPassword" title="编辑" component={EditPassword} hideNavBar={true} hideTabBar={true} />
                 </RouterWithRedux>
             </Provider>
         )

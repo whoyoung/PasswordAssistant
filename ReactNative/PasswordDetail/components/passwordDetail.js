@@ -13,7 +13,7 @@ import { Actions } from 'react-native-router-flux';
 export default class PasswordDetail extends Component {
 
     editPassword() {
-        alert('llll');
+        Actions.editPassword({rowData:this.props.rowData});
     }
 
     render() {

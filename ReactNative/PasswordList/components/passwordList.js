@@ -1,7 +1,5 @@
 'use strict';
-
 import React from 'react';
-
 import {
     Platform,
     Text,
@@ -129,36 +127,7 @@ export default class passwordList extends React.Component {
     componentWillUnmount() {
         realm.removeAllListeners();
     }
-    _getNewPrimaryId() {
-        let primaryKey = this.lastedPrimaryKey[0];
-        let tempKey = primaryKey.lastedId + 1;
-        realm.write(() => {
-            realm.create('LastedPrimaryKey', {
-                id: primaryKey.id, lastedId: tempKey
-            }, true);
-        });
-        return tempKey;
-    }
-    _addWebsite(serverProvider, description, userName) {
-        let newPrimaryId = this._getNewPrimaryId();
-        let server = '' + serverProvider + newPrimaryId;
-        realm.write(() => {
-            realm.create('PasswordItems', {
-                id: newPrimaryId, typeName: '网站', serverProvider: server, passwordType: 0,
-                creationDate: new Date(), description: description, userName: userName
-            });
-        });
-    }
-    _addNoteBook(serverProvider, description) {
-        let newPrimaryId = this._getNewPrimaryId();
-        let server = '' + serverProvider + newPrimaryId;
-        realm.write(() => {
-            realm.create('PasswordItems', {
-                id: newPrimaryId, typeName: '记事本', serverProvider: server, passwordType: 5,
-                creationDate: new Date(), description: description,
-            });
-        });
-    }
+    
     render() {
         let { loadTypeKeysDone,
             loadLastedPrimaryKeyDone,
