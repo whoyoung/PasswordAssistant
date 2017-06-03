@@ -15,6 +15,7 @@ import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
 let screenHeight = Dimensions.get('window').height;
 import * as editActions from '../actions/actions'
+import { Actions } from 'react-native-router-flux';
 
 let isIOS = Platform.OS !== 'android';
 
@@ -86,24 +87,16 @@ export default class CreateNewForm extends Component {
             alert('必填项不能为空');
             return;
         }
-        let { formType } = this.props.state
-        editActions.savePassword(formType, value);
-        this.clearForm(this.props.rowData);
-    }
-    clearForm(rowData) {
-        this.props.actions.clearForm(rowData);
+        editActions.updatePassword(this.props.rowData['id'], value);
+        Actions.pop();
     }
     onChange(value, path) {
-
     }
     scrollViewTo(offsetY) {
         this.refs.scroll.scrollTo({ y: offsetY, animated: true });
     }
     render() {
         let { formStruct, formOptions, formType, navTitle, formValue } = this.props.state;
-        console.log('====================================formValue');
-        console.log(this.props.state);
-        console.log('====================================');
         return (
             <View style={styles.containerView} >
                 <EditNavBar savePassword={this.savePassword.bind(this)} navTitle={navTitle} />

@@ -20,9 +20,6 @@ export function editFormValue(rowData) {
         }
         formValue[key] = rowData[key];
     }
-    console.log('====================================rowDataformValue');
-    console.log(formValue);
-    console.log('====================================');
     let { formStruct, formOptions } = formStructFunction(formType);
     return {
         type: types.yh_editPassword_init,
@@ -31,18 +28,6 @@ export function editFormValue(rowData) {
         formOptions: formOptions,
         formValue: formValue,
         navTitle: navTitle
-    }
-}
-
-export function clearForm(rowData) {
-    let formType = rowData['passwordType'];
-    let { formStruct, formOptions } = formStructFunction(formType);
-    return {
-        type: types.yh_editPassword_clearForm,
-        formType: formType,
-        formStruct: formStruct,
-        formOptions: formOptions,
-        formValue: {}
     }
 }
 
@@ -125,5 +110,14 @@ function getNewPrimaryId() {
 function writeTransation(createDict) {
     return realm.write(() => {
         realm.create('PasswordItems', createDict);
+    });
+}
+
+export function updatePassword(passwordId, value) {
+    console.log(...value);
+    realm.write(() => {
+        realm.create('PasswordItems', {
+            id: passwordId, ...value
+        }, true);
     });
 }
