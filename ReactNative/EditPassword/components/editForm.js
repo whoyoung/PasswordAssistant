@@ -4,7 +4,6 @@ import ReactNative, {
     StyleSheet,
     Text,
     View,
-    TouchableHighlight,
     ScrollView,
     Keyboard,
     Dimensions,
@@ -112,6 +111,7 @@ export default class CreateNewForm extends Component {
                     <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
                         options={formOptions} value={formValue} />
                 </ScrollView>
+
             </View>
 
         );
@@ -127,20 +127,5 @@ const styles = StyleSheet.create({
     container: {
         padding: 15,
         backgroundColor: '#F5FCFF'
-    },
-    button: {
-        height: 36,
-        backgroundColor: '#48BBEC',
-        borderColor: '#48BBEC',
-        borderWidth: 1,
-        borderRadius: 8,
-        marginBottom: 10,
-        alignSelf: 'stretch',
-        justifyContent: 'center'
-    },
-    buttonText: {
-        fontSize: 18,
-        color: 'white',
-        alignSelf: 'center'
-    },
+    }
 });

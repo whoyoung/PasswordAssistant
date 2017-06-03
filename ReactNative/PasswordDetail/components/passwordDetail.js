@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import ReactNative, {
     StyleSheet,
     Text,
-    View
+    View,
+    TouchableOpacity
 } from 'react-native';
 import fieldsName from '../../CreatePassword/containers/fieldsName'
 import DetailRow from './detailRow';
@@ -51,6 +52,9 @@ export default class PasswordDetail extends Component {
                 <DetailNavigationView navTitle={navTitle}
                     editPassword={this.editPassword.bind(this)} />
                 {rowViews}
+                <TouchableOpacity style={styles.button} opacity={0.5} onPress={() => { alert('delete') }} >
+                    <Text style={styles.buttonText} >删除账号</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -60,5 +64,20 @@ const styles = StyleSheet.create({
     titleText: {
         fontSize: 18,
         color: 'black',
-    }
+    },
+    button: {
+        height: 36,
+        backgroundColor: 'purple',
+        borderRadius: 8,
+        marginBottom: 10,
+        marginHorizontal: 15,
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        marginTop: 15
+    },
+    buttonText: {
+        fontSize: 18,
+        color: 'white',
+        alignSelf: 'center'
+    },
 });
