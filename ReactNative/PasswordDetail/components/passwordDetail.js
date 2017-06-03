@@ -9,39 +9,40 @@ import fieldsName from '../../CreatePassword/containers/fieldsName'
 import DetailRow from './detailRow';
 import DetailNavigationView from './detailNavigationView';
 import { Actions } from 'react-native-router-flux';
+import realm from '../../Realm/realm';
+
 
 export default class PasswordDetail extends Component {
+    componentWillMount() {
+        this.passwordType = this.props.rowData['id'];
+        this.passwordTypes = realm.objects('PasswordTypes');
+        let campareStr = 'typeKey = ' + this.passwordType;
+        let passwordType = this.passwordTypes.filtered(campareStr);
+        this.fieldsArray = JSON.parse(passwordType[0].typeFiels);
+    }
 
     editPassword() {
-        Actions.editPassword({rowData:this.props.rowData});
+        Actions.editPassword({ rowData: this.props.rowData });
     }
 
     render() {
         let { rowData } = this.props;
         let keyValueArray = [];
-        let passwordType;
         let navTitle = '账号详情';
-        for (var key in rowData) {
-            if (key == 'id' || key == 'creationDate') {
-                continue;
-            }
-            if (key == 'passwordType') {
-                passwordType = rowData[key];
-                continue;
-            }
-            if (rowData.hasOwnProperty(key)) {
-                var element = rowData[key];
-                if (!element || !element.length) continue;
-                if (key == 'serverProvider') {
-                    navTitle = element;
+        this.fieldsArray.forEach(function (element) {
+            let rowValue = rowData[element];
+            if (!rowValue || !rowValue.length) {
+            } else {
+                if (element == 'serverProvider') {
+                    navTitle = rowValue;
                 }
-                let dict = { key: key, value: element };
+                let dict = { key: element, value: rowValue };
                 keyValueArray.push(dict);
             }
-        }
+        }, this);
         let rowViews = [];
         keyValueArray.forEach(function (element) {
-            rowViews.push(<DetailRow rowDict={element} passwordType={passwordType} />);
+            rowViews.push(<DetailRow rowDict={element} passwordType={this.passwordType} />);
         }, this);
         return (
             <View >
