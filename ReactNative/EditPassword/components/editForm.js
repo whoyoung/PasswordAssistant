@@ -88,6 +88,7 @@ export default class CreateNewForm extends Component {
             return;
         }
         editActions.updatePassword(this.props.rowData['id'], value);
+        this.props.refreshDetail();
         Actions.pop();
     }
     onChange(value, path) {
