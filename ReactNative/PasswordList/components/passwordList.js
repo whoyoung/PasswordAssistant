@@ -164,7 +164,7 @@ export default class passwordList extends React.Component {
                 }}
             />);
         } else {
-            this.showView = <Text style={styles.initText}>empty</Text>
+            this.showView = <Text style={styles.initText}>暂无账号，请新建账号</Text>
         }
 
         return (
