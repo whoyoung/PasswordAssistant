@@ -19,29 +19,38 @@ export default class ListRow extends Component {
         let { rowData } = this.props;
         var swipeoutBtns = [
             {
-                text: 'Button'
+                text: '删除',
+                backgroundColor: 'purple',
+                color: 'black',
+                onPress: () => { alert('delete') },
+                underlayColor: 'gray'
+            },
+            {
+                text: '编辑',
+                backgroundColor: 'green',
+                color: 'black',
+                onPress: () => { alert('edit') },
+                underlayColor: 'gray'
             }
         ]
         return (
-            < Swipeout right={swipeoutBtns} >
-                <View>
-                    <Text>Swipe me left</Text>
-                </View>
+            <Swipeout right={swipeoutBtns} backgroundColor='white' autoClose={true} buttonWidth={60} >
+                <TouchableOpacity activeOpacity={0.5} onPress={() => this.goPasswordDetail()} >
+                    <View style={styles.textView} >
+                        <Text style={styles.titleText} numberOfLines={1} >{rowData.serverProvider}</Text>
+                    </View>
+                    <SeparatorLine style={{ marginHorizontal: 15 }} />
+                </TouchableOpacity>
             </Swipeout >
 
         )
     }
 }
-{/*<TouchableOpacity activeOpacity={0.5} onPress={() => this.goPasswordDetail()} >
-                <View style={styles.textView} >
-                    <Text style={styles.titleText} >{rowData.serverProvider}</Text>
-                </View>
-                <SeparatorLine />
-            </TouchableOpacity>*/}
+
 const styles = StyleSheet.create({
     titleText: {
         fontSize: 18,
-        color: 'black'
+        color: 'black',
     },
     textView: {
         height: 39.5,

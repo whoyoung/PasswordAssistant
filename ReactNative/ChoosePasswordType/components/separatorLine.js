@@ -8,7 +8,7 @@ import ReactNative, {
 export default class SeparatorLine extends Component {
     render() {
         return (
-            <View style={styles.separatorLine} />
+            <View style={[styles.separatorLine,this.props.style]} />
         )
     }
 }
