@@ -1,0 +1,67 @@
+import React, { Component } from 'react';
+import {
+    View,
+    Text,
+    StyleSheet,
+    Switch
+} from 'react-native';
+import { Actions } from 'react-native-router-flux'
+export default class Setting extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentWillMount() {
+    }
+
+    componentDidMount() {
+    }
+
+    componentWillUpdate() {
+    }
+
+    componentDidUpdate() {
+    }
+
+    componentWillUnmount() {
+    }
+    _switchStatusChange(newValue) {
+        this.props.actions.gestureSwitchChange(newValue);
+    }
+    render() {
+        let { gestureSwitchOn, gesturePassword } = this.props.state;
+        return (
+            <View style={styles.container}>
+                <View style={styles.textAndSwitch} >
+                    <Text numberOfLines={1} style={styles.text} >手势密码</Text>
+                    <Switch onValueChange={(newValue) => { this._switchStatusChange(newValue) }}
+                        value={gestureSwitchOn} />
+                </View>
+
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: 64,
+        backgroundColor: '#efeef4',
+        paddingVertical: 15
+    },
+    text: {
+        flex: 1,
+        color: 'black',
+        fontSize: 18,
+        textAlign: 'left',
+        marginRight: 15
+    },
+    textAndSwitch: {
+        flexDirection: 'row',
+        height: 60,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        paddingHorizontal: 15
+    }
+})

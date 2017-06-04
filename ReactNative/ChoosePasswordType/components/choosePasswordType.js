@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+        backgroundColor: '#efeef4',
     },
     titleView: {
         flexDirection: 'row',
@@ -77,7 +78,6 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     separatorLine: {
-        height: 0.5,
-        backgroundColor: 'gray',
+        height: 0.5
     }
 });

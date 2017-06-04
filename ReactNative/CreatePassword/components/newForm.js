@@ -134,11 +134,11 @@ const styles = StyleSheet.create({
     containerView: {
         flex: 1,
         paddingBottom: 40,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#efeef4',
     },
     container: {
         padding: 15,
-        backgroundColor: '#F5FCFF'
+        backgroundColor: '#efeef4'
     },
     button: {
         height: 36,

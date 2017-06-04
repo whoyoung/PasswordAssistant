@@ -185,7 +185,8 @@ export default class passwordList extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 64
+        marginTop: 64,
+        backgroundColor: '#efeef4'
     },
     initText: {
         color: 'gray',

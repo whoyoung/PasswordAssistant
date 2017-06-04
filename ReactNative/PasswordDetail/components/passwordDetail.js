@@ -64,7 +64,7 @@ export default class PasswordDetail extends Component {
             rowViews.push(<DetailRow rowDict={element} passwordType={this.passwordType} />);
         }, this);
         return (
-            <View >
+            <View style={styles.container} >
                 <DetailNavigationView navTitle={navTitle}
                     editPassword={this.editPassword.bind(this)} />
                 {rowViews}
@@ -77,6 +77,10 @@ export default class PasswordDetail extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#efeef4'
+    },
     titleText: {
         fontSize: 18,
         color: 'black',

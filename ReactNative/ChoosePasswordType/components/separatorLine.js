@@ -16,6 +16,6 @@ export default class SeparatorLine extends Component {
 const styles = StyleSheet.create({
     separatorLine: {
         height: 0.5,
-        backgroundColor: 'gray',
+        backgroundColor: '#d9d9d9',
     }
 });
