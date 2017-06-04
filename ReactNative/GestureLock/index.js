@@ -12,14 +12,15 @@ import { Actions } from 'react-native-router-flux';
 
 export default class GestureLock extends Component {
 componentWillMount() {
-    console.log('=======render');
 }
     render() {
-        
+        console.log('Actions.dismiss')
         return (
-            <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor: 'red'}} >
+            <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor: 'red'}} 
+            onPress={()=>{
                 
-            </View>
+                Actions.pop()}} />
+                
         )
     }
 }
