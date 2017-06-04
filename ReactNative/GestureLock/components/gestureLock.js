@@ -7,17 +7,15 @@ import ReactNative, {
     TouchableOpacity,
     Alert
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 export default class GestureLock extends Component {
-componentWillMount() {
-    console.log('=======render');
-}
     render() {
-        
         return (
-            <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor: 'red'}} >
+            <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor: 'red'}} 
+            onPress={()=>{Actions.pop()}} >
                 <Text style={styles.buttonText} >删除账号</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 }
