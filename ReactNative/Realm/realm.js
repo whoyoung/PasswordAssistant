@@ -92,4 +92,14 @@ TypeKeys.schema = {
     }
 };
 
-export default new Realm({ schema: [CustomItem, PasswordItems, LastedPrimaryKey,PasswordTypes,TypeKeys] });
+class GesturePassword extends Realm.Object { }
+GesturePassword.schema = {
+    name: 'GesturePassword',
+    primaryKey: 'id',
+    properties: {
+        id: 'int',
+        password: { type: 'string'}
+    }
+};
+
+export default new Realm({ schema: [CustomItem, PasswordItems, LastedPrimaryKey,PasswordTypes,TypeKeys,GesturePassword] });
