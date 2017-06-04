@@ -12,6 +12,7 @@ export default class Setting extends Component {
     }
 
     componentWillMount() {
+        this.props.actions.initState();
     }
 
     componentDidMount() {
