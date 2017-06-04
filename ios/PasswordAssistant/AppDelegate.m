@@ -12,6 +12,11 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+@interface AppDelegate()
+@property (nonatomic,strong) UIView *maskView;
+@property (nonatomic,strong) UIViewController *rootViewController;
+@end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -27,11 +32,40 @@
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
+  _rootViewController = [UIViewController new];
+  _rootViewController.view = rootView;
+  self.window.rootViewController = _rootViewController;
   [self.window makeKeyAndVisible];
   return YES;
 }
-
+//- (void)applicationDidBecomeActive:(UIApplication *)application {
+//  NSLog(@"========applicationDidBecomeActive");
+//}
+//- (void)applicationWillResignActive:(UIApplication *)application {
+//  NSLog(@"========applicationWillResignActive");
+//}
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+  self.maskView.hidden = NO;
+}
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+  self.maskView.hidden = YES;
+  [self sendAppEvent:@"applicationWillEnterForeground" body:nil];
+}
+- (UIView *)maskView {
+  if (!_maskView) {
+    _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    _maskView.backgroundColor = [UIColor lightGrayColor];
+    _maskView.hidden = YES;
+    [self.window addSubview:_maskView];
+  }
+  return _maskView;
+}
+- (void)sendAppEvent:(NSString *)name body:(NSDictionary *)data {
+  RCTBridge *bridge = ((RCTRootView *)(self.rootViewController.view)).bridge;
+  [bridge enqueueJSCall:@"RCTNativeAppEventEmitter"
+                 method:@"emit"
+                   args:data ? @[name, data] : @[name]
+             completion:NULL];
+  
+}
 @end

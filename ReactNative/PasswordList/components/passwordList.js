@@ -6,12 +6,14 @@ import {
     TouchableOpacity,
     View,
     StyleSheet,
+    DeviceEventEmitter
 } from 'react-native';
 
 import realm from '../../Realm/realm';
 import { ListView } from 'realm/react-native';
 import ListHeader from './listHeader'
 import ListRow from './listRow'
+import { Actions } from 'react-native-router-flux';
 
 export default class passwordList extends React.Component {
     constructor(props) {
@@ -122,10 +124,15 @@ export default class passwordList extends React.Component {
         this.passwordList.addListener((passwords, changes) => {
             this.props.actions.loadPasswordItems();
         });
+
+        this.notiEvent = DeviceEventEmitter.addListener('applicationWillEnterForeground',(value)=>{
+          Actions.gestureLock();
+      })
     }
 
     componentWillUnmount() {
         realm.removeAllListeners();
+        this.notiEvent.remove();
     }
     
     render() {
