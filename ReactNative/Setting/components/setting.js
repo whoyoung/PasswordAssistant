@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    Switch
+    Switch,
+    TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 export default class Setting extends Component {
@@ -38,7 +39,9 @@ export default class Setting extends Component {
                     <Switch onValueChange={(newValue) => { this._switchStatusChange(newValue) }}
                         value={gestureSwitchOn} />
                 </View>
-
+                <TouchableOpacity style={styles.textAndSwitch} onPress={()=>{alert('setting')}} >
+                    <Text numberOfLines={1} style={styles.text} >设置手势密码</Text>
+                </TouchableOpacity>
             </View>
         )
     }
