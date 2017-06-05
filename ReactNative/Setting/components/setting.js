@@ -4,9 +4,10 @@ import {
     Text,
     StyleSheet,
     Switch,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
-import { Actions } from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux';
 export default class Setting extends Component {
     constructor(props) {
         super(props);
@@ -39,8 +40,10 @@ export default class Setting extends Component {
                     <Switch onValueChange={(newValue) => { this._switchStatusChange(newValue) }}
                         value={gestureSwitchOn} />
                 </View>
-                <TouchableOpacity style={styles.textAndSwitch} onPress={()=>{alert('setting')}} >
+                <TouchableOpacity style={styles.textAndSwitch} onPress={() => { alert('setting') }} activeOpacity={0.8} >
                     <Text numberOfLines={1} style={styles.text} >设置手势密码</Text>
+                    <Image resizeMode={'contain'} style={styles.rightArrow} 
+                    source={require('../../Common/images/rightArrow.png') } />
                 </TouchableOpacity>
             </View>
         )
@@ -66,6 +69,12 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        marginTop: 0.5
+    },
+    rightArrow: {
+        marginRight: 0,
+        width: 8,
+        height: 13
     }
 })
