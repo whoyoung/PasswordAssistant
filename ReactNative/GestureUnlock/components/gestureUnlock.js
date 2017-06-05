@@ -9,7 +9,7 @@ import ReactNative, {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PasswordGesture from 'react-native-gesture-password'
-export default class GestureLock extends Component {
+export default class GestureUnlock extends Component {
     constructor(props) {
         super(props);
         this.state = {

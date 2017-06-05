@@ -23,7 +23,7 @@ import Setting from '../../Setting';
 import ChoosePasswordType from '../../ChoosePasswordType';
 import PasswordDetail from '../../PasswordDetail';
 import EditPassword from '../../EditPassword';
-import GestureLock from '../../GestureLock';
+import GestureUnlock from '../../GestureUnlock';
 
 export default class app extends Component {
     constructor(props) {
@@ -56,7 +56,7 @@ export default class app extends Component {
                     <Scene key="choosePasswordType" title="选择账号模板" component={ChoosePasswordType} hideNavBar={true} hideTabBar={true} />
                     <Scene key="passwordDetail" title="账号详情" component={PasswordDetail} hideNavBar={true} hideTabBar={true} />
                     <Scene key="editPassword" title="编辑" component={EditPassword} hideNavBar={true} hideTabBar={true} />
-                    <Scene key="gestureLock" title="手势解锁" component={GestureLock} direction='fade' hideNavBar={true} hideTabBar={true} 
+                    <Scene key="gestureUnlock" title="手势解锁" component={GestureUnlock} direction='fade' hideNavBar={true} hideTabBar={true} 
                     duration={0} />
                 </RouterWithRedux>
             </Provider>
