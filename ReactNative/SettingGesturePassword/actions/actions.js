@@ -22,16 +22,13 @@ export function inputEnd(password, step, originPassword) {
     switch (step) {
         case ConstDict.passwordStep.unlock:
         case ConstDict.passwordStep.unlockError: {
-            // alert(password+'=='+originPassword);
             if (password != originPassword) {
-                console.log('==========unlockError');
                 return {
                     type: types.yh_settingGesturePassword_unlockError,
                     step: ConstDict.passwordStep.unlockError,
                     status: ConstDict.passwordStatus.wrong
                 }
             } else {
-                console.log('===========unlockSuccess');
                 return {
                     type: types.yh_settingGesturePassword_unlockSuccess,
                     step: ConstDict.passwordStep.settingPassword,

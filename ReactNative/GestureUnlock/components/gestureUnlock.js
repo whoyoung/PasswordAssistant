@@ -8,43 +8,41 @@ import ReactNative, {
     Alert
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import PasswordGesture from 'react-native-gesture-password'
+import PasswordGesture from 'react-native-gesture-password';
+import YHNativePassword from '../../../Native/NativePassword';
+
 export default class GestureUnlock extends Component {
     constructor(props) {
         super(props);
         this.state = {
             status: 'normal',
-            message: 'Please input your password'
+            message: '请输入您的解锁密码'
         };
     }
-    onEnd(password) {
-        if (password == '123') {
+    componentWillMount() {
+        let {password} = this.props;
+        if (password == '0') {
+            Actions.pop();
+        } else {
             this.setState({
-                status: 'right',
-                message: 'Password is right, success.'
-            });
+                gesturePassword: password
+            })
+        }
+    }
+    onEnd(password) {
+        if (password == this.state.gesturePassword) {
             Actions.pop();
         } else {
             this.setState({
                 status: 'wrong',
-                message: 'Password is wrong, try again.'
+                message: '解锁密码错误，请重新输入'
             });
         }
     }
     onStart() {
-        this.setState({
-            status: 'normal',
-            message: 'Please input your password.'
-        });
     }
-    onReset() {
-        this.setState({
-            status: 'normal',
-            message: 'Please input your password (again).'
-        });
-    }
+    
     render() {
-        console.log(this.state);
         return (
             <PasswordGesture
                 ref='pg'

@@ -126,7 +126,7 @@ export default class passwordList extends React.Component {
         });
 
         this.notiEvent = DeviceEventEmitter.addListener('applicationWillEnterForeground',(value)=>{
-          Actions.gestureUnlock();
+          Actions.gestureUnlock(value);
       })
     }
 

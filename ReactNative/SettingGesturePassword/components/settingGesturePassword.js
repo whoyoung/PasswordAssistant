@@ -15,7 +15,6 @@ export default class SettingGesturePassword extends Component {
         super(props);
     }
     componentWillMount() {
-        alert(this.props.gesturePassword);
         this.props.actions.initStatus(this.props.gesturePassword);
     }
     shouldComponentUpdate(nextProps, nextState) {

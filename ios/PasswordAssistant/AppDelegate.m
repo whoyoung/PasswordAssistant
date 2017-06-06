@@ -38,18 +38,20 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
-//- (void)applicationDidBecomeActive:(UIApplication *)application {
-//  NSLog(@"========applicationDidBecomeActive");
-//}
-//- (void)applicationWillResignActive:(UIApplication *)application {
-//  NSLog(@"========applicationWillResignActive");
-//}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application {
   self.maskView.hidden = NO;
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   self.maskView.hidden = YES;
-  [self sendAppEvent:@"applicationWillEnterForeground" body:nil];
+  NSString *status = [[NSUserDefaults standardUserDefaults] objectForKey:@"gestureSwitchStatus"];
+  if (status && [status isEqualToString:@"1"]) {
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"gesturePassword"];
+    if (!password) {
+      password = @"0";
+    }
+    [self sendAppEvent:@"applicationWillEnterForeground" body:@{@"password":password}];
+  }
 }
 - (UIView *)maskView {
   if (!_maskView) {
