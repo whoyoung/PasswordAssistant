@@ -84,7 +84,8 @@ export default class CreateNewForm extends Component {
     savePassword() {
         let value = this.refs.form.getValue();
         if (!value || !value.serverProvider) {
-            alert('必填项不能为空');
+            Keyboard.dismiss();
+            this.refs.toast.show('必填项不能为空');
             return;
         }
         let { formType } = this.props.state
@@ -98,6 +99,7 @@ export default class CreateNewForm extends Component {
     }
     changeFormType(formType) {
         if (formType != this.props.state.formType) {
+            Keyboard.dismiss();
             this.props.actions.changeType(formType);
         }
     }

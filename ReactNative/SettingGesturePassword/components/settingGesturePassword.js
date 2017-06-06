@@ -5,61 +5,80 @@ import {
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import PasswordGesture from 'react-native-gesture-password';
+import ConstDict from '../constDict';
+import Toast from 'react-native-easy-toast'
+
 export default class SettingGesturePassword extends Component {
     constructor(props) {
         super(props);
     }
-
     componentWillMount() {
+        this.props.actions.initStatus(this.props.gesturePassword);
     }
-
-    componentDidMount() {
+    onEnd(password, step) {
+        switch (step) {
+            case ConstDict.passwordStep.unlock:
+            case ConstDict.passwordStep.unlockError: {
+                this.props.actions.inputEnd(password, step, this.props.gesturePassword);
+            }
+            break;
+            case ConstDict.passwordStep.settingPassword:
+            case ConstDict.passwordStep.lengthError: {
+                this.props.actions.inputEnd(password, step, null);
+            }
+            break;
+            case ConstDict.passwordStep.confirmPassword:
+            case ConstDict.passwordStep.confirmPasswordError: {
+                this.props.actions.inputEnd(password, step, this.props.state.settingPassword);
+            }
+            break;
+            default:
+                break;
+        }
     }
+    onStart() {
 
-    componentWillUpdate() {
     }
-
-    componentDidUpdate() {
+    onReset() {
+        this.setState({
+            status: 'normal',
+            message: 'Please input your password (again).'
+        });
     }
-
-    componentWillUnmount() {
-    }
-
     render() {
+        let { status, messages, step } = this.props.state;
         return (
-            <View style={styles.container} >
-                <Text style={styles.text} >
-                    back
-                </Text>
-            </View>
-
+            <PasswordGesture
+                ref='pg'
+                status={status}
+                message={messages[step]}
+                onStart={() => this.onStart()}
+                onEnd={(password) => this.onEnd(password, step)}
+                interval={600}
+            />
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 64,
-        backgroundColor: '#efeef4',
-    },
-    text: {
-        color: 'black',
+    titleText: {
         fontSize: 18,
-        textAlign: 'center',
+        color: 'black',
     },
-    textAndSwitch: {
-        flexDirection: 'row',
-        height: 60,
-        alignItems: 'center',
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
-        marginTop: 0.5
+    button: {
+        height: 36,
+        backgroundColor: 'purple',
+        borderRadius: 8,
+        marginBottom: 10,
+        marginHorizontal: 15,
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        marginTop: 15
     },
-    rightArrow: {
-        marginRight: 0,
-        width: 8,
-        height: 13
-    }
-})
+    buttonText: {
+        fontSize: 18,
+        color: 'white',
+        alignSelf: 'center'
+    },
+});

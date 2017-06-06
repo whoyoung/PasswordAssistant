@@ -31,8 +31,8 @@ export default class Setting extends Component {
     _switchStatusChange(newValue) {
         this.props.actions.gestureSwitchChange(newValue);
     }
-    _settingGesturePassword() {
-        Actions.settingGesturePassword();
+    _settingGesturePassword(gesturePassword) {
+        Actions.settingGesturePassword({gesturePassword: gesturePassword});
     }
     render() {
         let { gestureSwitchOn, gesturePassword } = this.props.state;
@@ -43,7 +43,7 @@ export default class Setting extends Component {
                     <Switch onValueChange={(newValue) => { this._switchStatusChange(newValue) }}
                         value={gestureSwitchOn} />
                 </View>
-                <TouchableOpacity style={styles.textAndSwitch} onPress={() => { this._settingGesturePassword() }} activeOpacity={0.8} >
+                <TouchableOpacity style={styles.textAndSwitch} onPress={() => { this._settingGesturePassword(gesturePassword) }} activeOpacity={0.8} >
                     <Text numberOfLines={1} style={styles.text} >设置手势密码</Text>
                     <Image resizeMode={'contain'} style={styles.rightArrow} 
                     source={require('../../Common/images/rightArrow.png') } />

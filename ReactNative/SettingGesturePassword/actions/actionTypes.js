@@ -1,4 +1,8 @@
 
-export const yh_settingGesturePassword_unlock  = 'yh_settingGesturePassword_unlock';
-export const yh_settingGesturePassword_input  = 'yh_settingGesturePassword_input';
-export const yh_settingGesturePassword_repeatInput  = 'yh_settingGesturePassword_repeatInput';
+export const yh_settingGesturePassword_initStatus = 'yh_settingGesturePassword_initStatus';
+export const yh_settingGesturePassword_unlockError  = 'yh_settingGesturePassword_unlockError';
+export const yh_settingGesturePassword_unlockSuccess  = 'yh_settingGesturePassword_unlockSuccess';
+export const yh_settingGesturePassword_lengthError  = 'yh_settingGesturePassword_lengthError';
+export const yh_settingGesturePassword_confirmPassword = 'yh_settingGesturePassword_confirmPassword';
+export const yh_settingGesturePassword_confirmPasswordError  = 'yh_settingGesturePassword_confirmPasswordError';
+export const yh_settingGesturePassword_settingSuccess  = 'yh_settingGesturePassword_settingSuccess';

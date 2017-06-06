@@ -14,13 +14,13 @@ export function initState() {
     return async function (dispatch) {
         let dict = await YHNativePassword.requireGestureSwitchStatusAndPassword();
         let gestureSwitchOn;
-        let gesturePassword;
+        let gesturePassword = dict['gesturePassword'];
         if (dict['gestureSwitchStatus'] == '1') {
             gestureSwitchOn = true;
         } else {
             gestureSwitchOn = false;
         }
-        if (dict['gesturePassword'] == '0') {
+        if (gesturePassword == '0') {
             gesturePassword = null;
         }
         dispatch({
