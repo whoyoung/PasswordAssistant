@@ -3,6 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
+    Image
 } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
@@ -36,7 +37,7 @@ export default class app extends Component {
     componentDidMount() {
     }
     componentWillUnmount() {
-        
+
     }
     render() {
         return (
@@ -51,15 +52,18 @@ export default class app extends Component {
                         <Scene key="createPassword" title="新建账号" component={CreatePassword} hideNavBar={true} hideTabBar={false}
                             icon={TabIcon} />
                         <Scene key="setting" title="设置" component={Setting} hideNavBar={false} hideTabBar={false}
-                            icon={TabIcon}  navigationBarStyle={NavigationStyles.systemNavigatorStyle}
+                            icon={TabIcon} navigationBarStyle={NavigationStyles.systemNavigatorStyle}
                             titleStyle={NavigationStyles.systemTitleStyle} />
                     </Scene>
                     <Scene key="choosePasswordType" title="选择账号模板" component={ChoosePasswordType} hideNavBar={true} hideTabBar={true} />
                     <Scene key="passwordDetail" title="账号详情" component={PasswordDetail} hideNavBar={true} hideTabBar={true} />
                     <Scene key="editPassword" title="编辑" component={EditPassword} hideNavBar={true} hideTabBar={true} />
-                    <Scene key="gestureUnlock" title="手势解锁" component={GestureUnlock} direction='fade' hideNavBar={true} hideTabBar={true} 
-                    duration={0} />
-                    <Scene key="settingGesturePassword" title="设置手势密码" component={SettingGesturePassword} hideNavBar={false} hideTabBar={true} />
+                    <Scene key="gestureUnlock" title="手势解锁" component={GestureUnlock} direction='fade' hideNavBar={true} hideTabBar={true}
+                        duration={0} />
+                    <Scene key="settingGesturePassword" title="设置手势密码" component={SettingGesturePassword} hideNavBar={false} hideTabBar={true}
+                        navigationBarStyle={NavigationStyles.systemNavigatorStyle} titleStyle={NavigationStyles.systemTitleStyle}
+                        backButtonImage={require('../NavigationElement/images/nav_bar_back.png')} 
+                        leftButtonIconStyle={{ width: 20, justifyContent: 'center', marginLeft: 5 }} />
                 </RouterWithRedux>
             </Provider>
         )
