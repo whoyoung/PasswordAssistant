@@ -8,77 +8,70 @@ import {
 import PasswordGesture from 'react-native-gesture-password';
 import ConstDict from '../constDict';
 import Toast from 'react-native-easy-toast'
+import { Actions } from 'react-native-router-flux';
 
 export default class SettingGesturePassword extends Component {
     constructor(props) {
         super(props);
     }
     componentWillMount() {
+        alert(this.props.gesturePassword);
         this.props.actions.initStatus(this.props.gesturePassword);
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.state && nextProps.state.step && nextProps.state.step == ConstDict.passwordStep.settingSuccess) {
+            Actions.pop();
+            return false;
+        }
+        return true;
+    }
+
     onEnd(password, step) {
         switch (step) {
             case ConstDict.passwordStep.unlock:
             case ConstDict.passwordStep.unlockError: {
                 this.props.actions.inputEnd(password, step, this.props.gesturePassword);
             }
-            break;
+                break;
             case ConstDict.passwordStep.settingPassword:
             case ConstDict.passwordStep.lengthError: {
                 this.props.actions.inputEnd(password, step, null);
             }
-            break;
+                break;
             case ConstDict.passwordStep.confirmPassword:
             case ConstDict.passwordStep.confirmPasswordError: {
                 this.props.actions.inputEnd(password, step, this.props.state.settingPassword);
             }
-            break;
+                break;
             default:
                 break;
         }
     }
-    onStart() {
-
-    }
-    onReset() {
-        this.setState({
-            status: 'normal',
-            message: 'Please input your password (again).'
-        });
-    }
     render() {
         let { status, messages, step } = this.props.state;
         return (
-            <PasswordGesture
-                ref='pg'
-                status={status}
-                message={messages[step]}
-                onStart={() => this.onStart()}
-                onEnd={(password) => this.onEnd(password, step)}
-                interval={600}
-            />
+            <View style={styles.containerView} >
+                <PasswordGesture
+                    ref='pg'
+                    status={status}
+                    message={messages[step]}
+                    onStart={() => { }}
+                    onEnd={(password) => this.onEnd(password, step)}
+                    interval={600}
+                    textStyle={styles.titleText}
+                />
+                <Toast ref="toast" position='center' />
+            </View>
+
         )
     }
 }
 
 const styles = StyleSheet.create({
+    containerView: {
+        flex: 1,
+    },
     titleText: {
         fontSize: 18,
-        color: 'black',
-    },
-    button: {
-        height: 36,
-        backgroundColor: 'purple',
-        borderRadius: 8,
-        marginBottom: 10,
-        marginHorizontal: 15,
-        alignSelf: 'stretch',
-        justifyContent: 'center',
-        marginTop: 15
-    },
-    buttonText: {
-        fontSize: 18,
-        color: 'white',
-        alignSelf: 'center'
-    },
+    }
 });

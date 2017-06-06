@@ -52,29 +52,9 @@ export default class GestureUnlock extends Component {
                 message={this.state.message}
                 onStart={() => this.onStart()}
                 onEnd={(password) => this.onEnd(password)}
+                textStyle={{fontSize: 18}}
+                interval={600}
             />
         )
     }
 }
-
-const styles = StyleSheet.create({
-    titleText: {
-        fontSize: 18,
-        color: 'black',
-    },
-    button: {
-        height: 36,
-        backgroundColor: 'purple',
-        borderRadius: 8,
-        marginBottom: 10,
-        marginHorizontal: 15,
-        alignSelf: 'stretch',
-        justifyContent: 'center',
-        marginTop: 15
-    },
-    buttonText: {
-        fontSize: 18,
-        color: 'white',
-        alignSelf: 'center'
-    },
-});
