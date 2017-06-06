@@ -32,7 +32,10 @@ export default class Setting extends Component {
         this.props.actions.gestureSwitchChange(newValue);
     }
     _settingGesturePassword(gesturePassword) {
-        Actions.settingGesturePassword({gesturePassword: gesturePassword});
+        Actions.settingGesturePassword({gesturePassword: gesturePassword, refreshSetting:this.refreshSetting.bind(this)});
+    }
+    refreshSetting() {
+        this.props.actions.initState();
     }
     render() {
         let { gestureSwitchOn, gesturePassword } = this.props.state;

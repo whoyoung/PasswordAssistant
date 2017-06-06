@@ -20,12 +20,14 @@ export default class SettingGesturePassword extends Component {
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.state && nextProps.state.step && nextProps.state.step == ConstDict.passwordStep.settingSuccess) {
+            if (this.props.refreshSetting) {
+                this.props.refreshSetting();
+            }
             Actions.pop();
             return false;
         }
         return true;
     }
-
     onEnd(password, step) {
         switch (step) {
             case ConstDict.passwordStep.unlock:
