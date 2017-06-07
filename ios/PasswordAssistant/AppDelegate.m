@@ -18,16 +18,22 @@
 @end
 
 @implementation AppDelegate
-
+//程序启动时也要判断是否加锁
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSString *status = [[NSUserDefaults standardUserDefaults] objectForKey:@"gestureSwitchStatus"];
+  NSDictionary *initialDict = nil;
+  if (status && [status isEqualToString:@"1"]) {
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"gesturePassword"];
+    if (password && ![password isEqualToString:@"0"]) {
+      initialDict = @{@"password":password};
+    }
+  }
   NSURL *jsCodeLocation;
-
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"PasswordAssistant"
-                                               initialProperties:nil
+                                               initialProperties:initialDict
                                                    launchOptions:launchOptions];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
@@ -47,10 +53,9 @@
   NSString *status = [[NSUserDefaults standardUserDefaults] objectForKey:@"gestureSwitchStatus"];
   if (status && [status isEqualToString:@"1"]) {
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"gesturePassword"];
-    if (!password) {
-      password = @"0";
+    if (password && ![password isEqualToString:@"0"]) {
+      [self sendAppEvent:@"applicationWillEnterForeground" body:@{@"password":password}];
     }
-    [self sendAppEvent:@"applicationWillEnterForeground" body:@{@"password":password}];
   }
 }
 - (UIView *)maskView {
@@ -70,4 +75,5 @@
              completion:NULL];
   
 }
+
 @end

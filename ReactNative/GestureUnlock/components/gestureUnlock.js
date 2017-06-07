@@ -9,7 +9,6 @@ import ReactNative, {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PasswordGesture from 'react-native-gesture-password';
-import YHNativePassword from '../../../Native/NativePassword';
 
 export default class GestureUnlock extends Component {
     constructor(props) {
@@ -20,7 +19,7 @@ export default class GestureUnlock extends Component {
         };
     }
     componentWillMount() {
-        let {password} = this.props;
+        let { password } = this.props;
         if (password == '0') {
             Actions.pop();
         } else {
@@ -41,7 +40,7 @@ export default class GestureUnlock extends Component {
     }
     onStart() {
     }
-    
+
     render() {
         return (
             <PasswordGesture
@@ -50,7 +49,7 @@ export default class GestureUnlock extends Component {
                 message={this.state.message}
                 onStart={() => this.onStart()}
                 onEnd={(password) => this.onEnd(password)}
-                textStyle={{fontSize: 18}}
+                textStyle={{ fontSize: 18 }}
                 interval={600}
             />
         )

@@ -26,20 +26,26 @@ import PasswordDetail from '../../PasswordDetail';
 import EditPassword from '../../EditPassword';
 import GestureUnlock from '../../GestureUnlock';
 import SettingGesturePassword from '../../SettingGesturePassword';
+import GestureUnlockModal from '../../GestureUnlockModal';
 
 export default class app extends Component {
     constructor(props) {
         super(props);
+        if (this.props.password) {
+            this.state = { hasUnlock: false }
+        }
     }
-
-    componentWillMount() {
-    }
-    componentDidMount() {
-    }
-    componentWillUnmount() {
-
+    unlockSuccess() {
+        this.setState({ hasUnlock: true });
     }
     render() {
+        if (this.props.password && !this.state.hasUnlock) {
+            return (
+                <GestureUnlockModal password={this.props.password}
+                    unlockSuccess={this.unlockSuccess.bind(this)} />
+            )
+        }
+
         return (
             <Provider store={store}>
                 <RouterWithRedux>
@@ -62,7 +68,7 @@ export default class app extends Component {
                         duration={0} />
                     <Scene key="settingGesturePassword" title="设置手势密码" component={SettingGesturePassword} hideNavBar={false} hideTabBar={true}
                         navigationBarStyle={NavigationStyles.systemNavigatorStyle} titleStyle={NavigationStyles.systemTitleStyle}
-                        backButtonImage={require('../NavigationElement/images/nav_bar_back.png')} 
+                        backButtonImage={require('../NavigationElement/images/nav_bar_back.png')}
                         leftButtonIconStyle={{ width: 20, justifyContent: 'center', marginLeft: 5 }} />
                 </RouterWithRedux>
             </Provider>
