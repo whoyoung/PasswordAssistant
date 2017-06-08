@@ -79,11 +79,7 @@ export default class CreateNewForm extends Component {
 
     savePassword() {
         let value = this.refs.form.getValue();
-        if (!value || !value.serverProvider) {
-            Keyboard.dismiss();
-            this.refs.toast.show('必填项不能为空');
-            return;
-        }
+        if (!value) return;
         let { formType } = this.props.state
         createActions.savePassword(formType, value);
         this.clearForm(formType);

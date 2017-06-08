@@ -69,12 +69,26 @@ function fieldNameFunction(element, formType) {
     if (!name) {
         name = element;
     }
-    return {
+    let fields = {
         label: name,
         onFocus: () => {
             console.inputRef = element;
         }
     }
+    let NumberFileds = ['mobilePhone', 'bankCardNum', 'zipCode', 'telephone', 'credentialsNum'];
+    if (NumberFileds.indexOf(element) >= 0) {
+        fields['error'] = (value, path, context) => {
+            let reg = /^\d*$/;
+            return reg.test(value) ? null : '请输入数字类型的字符';
+        }
+    }
+    if (element == 'serverProvider') {
+        fields['error'] = (value, path, context) => {
+            let reg = RegExp(' ', 'g');
+            return (value && value.length && (!value.match(reg) || value.match(reg).length < value.length) )  ? null : '必填项不能为空';
+        }
+    }
+    return fields;
 }
 
 export function savePassword(formType, value) {
