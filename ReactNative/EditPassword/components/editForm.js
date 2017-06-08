@@ -81,10 +81,7 @@ export default class CreateNewForm extends Component {
 
     savePassword() {
         let value = this.refs.form.getValue();
-        if (!value || !value.serverProvider) {
-            alert('必填项不能为空');
-            return;
-        }
+        if (!value) return;
         editActions.updatePassword(this.props.rowData['id'], value);
         if (this.props.refreshDetail) {
             this.props.refreshDetail();
