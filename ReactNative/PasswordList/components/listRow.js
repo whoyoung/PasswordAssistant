@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     textView: {
-        height: 39.5,
+        height: 49.5,
         paddingHorizontal: 15,
         justifyContent: 'center'
     }
