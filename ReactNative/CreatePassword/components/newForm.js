@@ -49,7 +49,6 @@ export default class CreateNewForm extends Component {
         if (!console.inputRef) return;
         this.needMove = false;
         this.refs.form.getComponent(console.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
-            // console.log("this.moveH=" + this.moveH, "this.contentHeight=" + this.contentHeight, "height=" + screenHeight);
             let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
             //输入框距离底部的距离小于键盘的高度，需要滑动,36是一行输入框的高度
             if (leftHeight < e.startCoordinates.height + 36) {

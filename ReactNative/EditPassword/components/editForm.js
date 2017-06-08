@@ -17,6 +17,7 @@ import * as editActions from '../actions/actions'
 import { Actions } from 'react-native-router-flux';
 
 let isIOS = Platform.OS !== 'android';
+let scrollContainerH = screenHeight - (isIOS ? 64 : 44);
 
 export default class CreateNewForm extends Component {
     constructor(props) {
@@ -25,7 +26,6 @@ export default class CreateNewForm extends Component {
         this.contentHeight = 0;
         console.inputRef = null;//当前编辑的textInput
         this.moveH = 0;//ScrollView滑动的距离
-        this.lastMoveH = 0;//保留上次滑动的距离
         this.needMove = false;//弹出键盘时，inputRef是否需要滑动
     }
     componentWillMount() {
@@ -49,36 +49,31 @@ export default class CreateNewForm extends Component {
         this.needMove = false;
         this.refs.form.getComponent(console.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
             let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
-            //输入框距离底部的距离小于键盘的高度，需要滑动,36是一行输入框的高度
+             //输入框距离底部的距离小于键盘的高度，需要滑动,36是一行输入框的高度
             if (leftHeight < e.startCoordinates.height + 36) {
                 this.needMove = true;
-                // 需要移动的距离
                 let moveHeight = e.startCoordinates.height + 36 - leftHeight;
-                console.log("this.moveH=" + this.moveH, "this.contentHeight=" + this.contentHeight, "height=" + screenHeight);
-
-                // moveH 异常数据处理
-                if (screenHeight > this.contentHeight) {
-                    this.moveH = 0;
-                } else if (this.moveH + py > this.contentHeight) {
-                    this.moveH = this.contentHeight - py;
-                    console.log("===error===");
-                } else if (this.moveH + (py - isIOS ? 64 : 44) < 0) {
-                    this.moveH = 0;
-                }
-                console.log('moveH===' + this.moveH);
-                this.lastMoveH = this.moveH;
-                this.scrollViewTo(this.lastMoveH + moveHeight);
+                this.scrollViewTo(this._dealOffset() + moveHeight);
             }
         });
     }
 
     _keyboardDidHide = () => {
         if (this.needMove) {
-            this.scrollViewTo(this.lastMoveH);
+            this.scrollViewTo(this._dealOffset());
         }
         console.inputRef = null;
     }
-
+    _dealOffset() {
+        if (this.moveH <= 0) {
+            this.moveH = 0;
+        } else if (scrollContainerH >= this.contentHeight) {
+            this.moveH = 0;
+        } else if (this.moveH + scrollContainerH > this.contentHeight) {
+            this.moveH = this.contentHeight - scrollContainerH;
+        }
+        return this.moveH;
+    }
     savePassword() {
         let value = this.refs.form.getValue();
         if (!value) return;
@@ -103,13 +98,13 @@ export default class CreateNewForm extends Component {
                     onContentSizeChange={(contentWidth, contentHeight) => {
                         this.contentHeight = parseInt(contentHeight);
                     }}
+                    keyboardShouldPersistTaps={'handled'}
                     onScrollEndDrag={(e) => {
                         this.moveH = e.nativeEvent.contentOffset.y;
                     }} >
                     <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
                         options={formOptions} value={formValue} />
                 </ScrollView>
-
             </View>
 
         );
@@ -119,7 +114,6 @@ export default class CreateNewForm extends Component {
 const styles = StyleSheet.create({
     containerView: {
         flex: 1,
-        paddingBottom: 40,
         backgroundColor: '#efeef4',
     },
     container: {
