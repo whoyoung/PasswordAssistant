@@ -118,6 +118,6 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 15,
-        backgroundColor: '#efeef4'
+        backgroundColor: 'white'
     }
 });
