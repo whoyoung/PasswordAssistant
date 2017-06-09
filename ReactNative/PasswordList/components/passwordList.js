@@ -16,6 +16,7 @@ import { ListView } from 'realm/react-native';
 import ListHeader from './listHeader'
 import ListRow from './listRow'
 import { Actions } from 'react-native-router-flux';
+import Toast from 'react-native-easy-toast'
 
 export default class passwordList extends React.Component {
     constructor(props) {
@@ -136,7 +137,13 @@ export default class passwordList extends React.Component {
         realm.removeAllListeners();
         this.notiEvent.remove();
     }
-
+_startSearch(searchKey,shouldShowList) {
+if (shouldShowList && this.passwordList.length) {
+    this.refs.toast.show('没有匹配的搜索结果');
+} else {
+    this.refs.toast.show('没有匹配的搜索结果');
+}
+}
     render() {
         let { loadTypeKeysDone,
             loadLastedPrimaryKeyDone,
@@ -164,7 +171,6 @@ export default class passwordList extends React.Component {
         }, this);
         if (this.passwordList.length) {
             this.showView = (
-
                 <ListView stype={{ marginTop: 15 }}
                     dataSource={this.ds.cloneWithRowsAndSections(data)}
                     renderRow={(rowData, sectionId, rowId) => {
@@ -186,11 +192,12 @@ export default class passwordList extends React.Component {
                     <TextInput style={styles.textInput} autoCapitalize='none'
                         autoCorrect={false} returnKeyType='done' clearButtonMode='while-editing'
                         enablesReturnKeyAutomatically={true} onSubmitEditing={
-                            (event) => { alert(event.nativeEvent.text); }
+                            (event) => { this._startSearch(event.nativeEvent.text,shouldShowList); }
                         } color='black' fontSize={16} placeholder='请输入要搜索的账号名称' />
                 </View>
 
                 {this.showView}
+                                <Toast ref="toast" position='center' />
             </View>
         );
     }

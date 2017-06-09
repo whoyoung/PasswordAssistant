@@ -19,7 +19,6 @@ import Toast from 'react-native-easy-toast'
 let isIOS = Platform.OS !== 'android';
 let scrollContainerH = screenHeight - 50 - (isIOS ? 64 : 44);
 
-
 export default class CreateNewForm extends Component {
     constructor(props) {
         super();
