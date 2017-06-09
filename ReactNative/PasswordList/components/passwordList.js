@@ -6,7 +6,9 @@ import {
     TouchableOpacity,
     View,
     StyleSheet,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    TextInput,
+    Image
 } from 'react-native';
 
 import realm from '../../Realm/realm';
@@ -31,9 +33,9 @@ export default class passwordList extends React.Component {
         this.passwordTypes = realm.objects('PasswordTypes');
         if (!this.typeKeys.length) {
             //网站、银行、社交账号、联系人、证件、记事本
-            let keysStr = JSON.stringify([{key:0,value:'website'}, {key:1,value:'bank'}, 
-                {key:2,value:'social'}, {key:3,value:'contact'}, {key:4,value:'credentials'}, 
-                {key:5,value:'notebook'}]);
+            let keysStr = JSON.stringify([{ key: 0, value: 'website' }, { key: 1, value: 'bank' },
+            { key: 2, value: 'social' }, { key: 3, value: 'contact' }, { key: 4, value: 'credentials' },
+            { key: 5, value: 'notebook' }]);
             realm.write(() => {
                 realm.create('TypeKeys', { id: 0, typeList: keysStr });
             });
@@ -47,7 +49,7 @@ export default class passwordList extends React.Component {
             realm.write(() => {
                 let zeroTypeStr = JSON.stringify(
                     [
-                        'serverProvider', 'userName', 'loginAccount', 
+                        'serverProvider', 'userName', 'loginAccount',
                         'loginPassword', 'mobilePhone', 'description'
                     ]
                 )
@@ -70,7 +72,7 @@ export default class passwordList extends React.Component {
 
                 let secondTypeStr = JSON.stringify(
                     [
-                        'serverProvider', 'userName', 'loginAccount', 'loginPassword', 
+                        'serverProvider', 'userName', 'loginAccount', 'loginPassword',
                         'mobilePhone', 'MobileBankPaymentPassword', 'description'
                     ]
                 )
@@ -80,7 +82,7 @@ export default class passwordList extends React.Component {
 
                 let thirdTypeStr = JSON.stringify(
                     [
-                        'serverProvider', 'mobilePhone', 'telephone', 'company', 
+                        'serverProvider', 'mobilePhone', 'telephone', 'company',
                         'post', 'EMail', 'lunarCalendarBirthday', 'solarCalendarBirthday',
                         'detailAddress', 'zipCode', 'description'
                     ]
@@ -125,16 +127,16 @@ export default class passwordList extends React.Component {
             this.props.actions.loadPasswordItems();
         });
 
-        this.notiEvent = DeviceEventEmitter.addListener('applicationWillEnterForeground',(value)=>{
-          Actions.gestureUnlock(value);
-      })
+        this.notiEvent = DeviceEventEmitter.addListener('applicationWillEnterForeground', (value) => {
+            Actions.gestureUnlock(value);
+        })
     }
 
     componentWillUnmount() {
         realm.removeAllListeners();
         this.notiEvent.remove();
     }
-    
+
     render() {
         let { loadTypeKeysDone,
             loadLastedPrimaryKeyDone,
@@ -161,21 +163,33 @@ export default class passwordList extends React.Component {
             }
         }, this);
         if (this.passwordList.length) {
-            this.showView = (<ListView stype={{ marginTop: 15 }}
-                dataSource={this.ds.cloneWithRowsAndSections(data)}
-                renderRow={(rowData, sectionId, rowId) => {
-                    return <ListRow rowData={rowData} />
-                }}
-                renderSectionHeader={(sectionData, sectionID) => {
-                    return <ListHeader sectionID={sectionID} />
-                }}
-            />);
+            this.showView = (
+
+                <ListView stype={{ marginTop: 15 }}
+                    dataSource={this.ds.cloneWithRowsAndSections(data)}
+                    renderRow={(rowData, sectionId, rowId) => {
+                        return <ListRow rowData={rowData} />
+                    }}
+                    renderSectionHeader={(sectionData, sectionID) => {
+                        return <ListHeader sectionID={sectionID} />
+                    }}
+                />
+            );
         } else {
             this.showView = <Text style={styles.initText}>暂无账号，请新建账号</Text>
         }
 
         return (
             <View style={styles.container}>
+                <View style={styles.inputView}>
+                    <Image style={styles.icon} resizeMode='contain' source={require('../../Common/images/searchIcon.png')} />
+                    <TextInput style={styles.textInput} autoCapitalize='none'
+                        autoCorrect={false} returnKeyType='done' clearButtonMode='while-editing'
+                        enablesReturnKeyAutomatically={true} onSubmitEditing={
+                            (event) => { alert(event.nativeEvent.text); }
+                        } color='black' fontSize={16} placeholder='请输入要搜索的账号名称' />
+                </View>
+
                 {this.showView}
             </View>
         );
@@ -193,6 +207,26 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         marginTop: 15
+    },
+    textInput: {
+        flex: 1,
+        marginLeft: 5
+    },
+    inputView: {
+        margin: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 5,
+        borderWidth: 0.5,
+        borderRadius: 8,
+        backgroundColor: 'white',
+        borderColor: 'gray',
+        height: 30
+
+    },
+    icon: {
+        width:21,
+        height: 21
     }
 })
 
