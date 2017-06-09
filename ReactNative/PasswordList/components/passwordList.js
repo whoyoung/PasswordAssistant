@@ -25,6 +25,9 @@ export default class passwordList extends React.Component {
         this.ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+        });
+        this.searchDS = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2,
         })
     }
     componentWillMount() {
@@ -137,18 +140,24 @@ export default class passwordList extends React.Component {
         realm.removeAllListeners();
         this.notiEvent.remove();
     }
-_startSearch(searchKey,shouldShowList) {
-if (shouldShowList && this.passwordList.length) {
-    this.refs.toast.show('没有匹配的搜索结果');
-} else {
-    this.refs.toast.show('没有匹配的搜索结果');
-}
-}
+    _startSearch(searchKey, shouldShowList) {
+        if (shouldShowList && this.passwordList.length) {
+            let campareStr = 'serverProvider CONTAINS[c] "' + searchKey + '"';
+            let searchResults = this.passwordList.filtered(campareStr + '').sorted('creationDate',true);
+            if (searchResults.length) {
+                this.props.actions.searchResults(searchResults);
+            } else
+                this.refs.toast.show('没有匹配的搜索结果');
+        } else {
+            this.refs.toast.show('没有匹配的搜索结果');
+        }
+    }
     render() {
         let { loadTypeKeysDone,
             loadLastedPrimaryKeyDone,
             loadPasswordItemsDone,
-            loadPasswordTypesDone } = this.props.state;
+            loadPasswordTypesDone,
+            searchResults } = this.props.state;
         let shouldShowList = loadTypeKeysDone && loadLastedPrimaryKeyDone && loadPasswordItemsDone && loadPasswordTypesDone;
         if (!shouldShowList) {
             return (
@@ -164,7 +173,7 @@ if (shouldShowList && this.passwordList.length) {
         let data = {};
         typeArray.forEach(function (element) {
             let campareStr = 'passwordType = ' + element.key;
-            let tempResults = this.passwordList.filtered(campareStr);
+            let tempResults = this.passwordList.filtered(campareStr).sorted('creationDate',true);
             if (tempResults.length) {
                 data['' + element.value] = tempResults;
             }
@@ -192,12 +201,12 @@ if (shouldShowList && this.passwordList.length) {
                     <TextInput style={styles.textInput} autoCapitalize='none'
                         autoCorrect={false} returnKeyType='done' clearButtonMode='while-editing'
                         enablesReturnKeyAutomatically={true} onSubmitEditing={
-                            (event) => { this._startSearch(event.nativeEvent.text,shouldShowList); }
+                            (event) => { this._startSearch(event.nativeEvent.text, shouldShowList); }
                         } color='black' fontSize={16} placeholder='请输入要搜索的账号名称' />
                 </View>
 
                 {this.showView}
-                                <Toast ref="toast" position='center' />
+                <Toast ref="toast" position='center' />
             </View>
         );
     }
@@ -232,7 +241,7 @@ const styles = StyleSheet.create({
 
     },
     icon: {
-        width:21,
+        width: 21,
         height: 21
     }
 })

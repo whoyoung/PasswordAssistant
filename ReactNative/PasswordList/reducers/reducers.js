@@ -6,6 +6,7 @@ const initState = {
     loadLastedPrimaryKeyDone: false,
     loadPasswordItemsDone: false,
     loadPasswordTypesDone: false,
+    searchResults: []
 }
 
 export default function reducers(state = initState, action = {}) {
@@ -29,6 +30,11 @@ export default function reducers(state = initState, action = {}) {
             return {
                 ...state,
                 loadPasswordTypesDone: true
+            }
+        case 'yh_passwordList_searchResults': 
+            return {
+                ...state,
+                searchResults: action.searchResults
             }
         default:
             return state;
