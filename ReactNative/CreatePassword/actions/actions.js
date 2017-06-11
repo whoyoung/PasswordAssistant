@@ -7,6 +7,13 @@ let typeKeys = realm.objects('TypeKeys');
 let lastedPrimaryKey = realm.objects('LastedPrimaryKey');
 let passwordTypes = realm.objects('PasswordTypes');
 
+let _ = require('lodash');
+
+// clone the default stylesheet
+const stylesheet = _.cloneDeep(tForm.form.Form.stylesheet);
+stylesheet.textbox.normal.height = 65;
+const noteStylesheet = _.cloneDeep(tForm.form.Form.stylesheet);
+noteStylesheet.textbox.normal.height = 200;
 export function changeType(formType) {
     let { formStruct, formOptions } = formStructFunction(formType);
     return {
@@ -73,7 +80,8 @@ function fieldNameFunction(element, formType) {
         label: name,
         onFocus: () => {
             console.inputRef = element;
-        }
+        },
+        multiline: true
     }
     let NumberFileds = ['mobilePhone', 'bankCardNum', 'zipCode', 'telephone', 'credentialsNum'];
     if (NumberFileds.indexOf(element) >= 0) {
@@ -85,8 +93,14 @@ function fieldNameFunction(element, formType) {
     if (element == 'serverProvider') {
         fields['error'] = (value, path, context) => {
             let reg = RegExp(' ', 'g');
-            return (value && value.length && (!value.match(reg) || value.match(reg).length < value.length) )  ? null : '必填项不能为空';
+            return (value && value.length && (!value.match(reg) || value.match(reg).length < value.length)) ? null : '必填项不能为空';
         }
+    }
+    if (element == 'description') {
+        if(formType == 5) {
+            fields['stylesheet'] = noteStylesheet;
+        } else
+        fields['stylesheet'] = stylesheet;
     }
     return fields;
 }
