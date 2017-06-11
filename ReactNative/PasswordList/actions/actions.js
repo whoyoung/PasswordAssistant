@@ -16,3 +16,11 @@ export function loadPasswordTypes(){
     return {type:types.yh_passwordList_loadPasswordTypes}
 }
 
+export function searchResults(searchResults){
+    return {type:types.yh_passwordList_searchResults, searchResults:searchResults}
+}
+
+export function clearSearchResults(){
+    return {type:types.yh_passwordList_clearSearchResults}
+}
+

@@ -143,7 +143,7 @@ export default class passwordList extends React.Component {
     _startSearch(searchKey, shouldShowList) {
         if (shouldShowList && this.passwordList.length) {
             let campareStr = 'serverProvider CONTAINS[c] "' + searchKey + '"';
-            let searchResults = this.passwordList.filtered(campareStr + '').sorted('creationDate',true);
+            let searchResults = this.passwordList.filtered(campareStr + '').sorted('creationDate', true);
             if (searchResults.length) {
                 this.props.actions.searchResults(searchResults);
             } else
@@ -151,6 +151,9 @@ export default class passwordList extends React.Component {
         } else {
             this.refs.toast.show('没有匹配的搜索结果');
         }
+    }
+    _clearSearchResults() {
+        this.props.actions.clearSearchResults();
     }
     render() {
         let { loadTypeKeysDone,
@@ -173,23 +176,35 @@ export default class passwordList extends React.Component {
         let data = {};
         typeArray.forEach(function (element) {
             let campareStr = 'passwordType = ' + element.key;
-            let tempResults = this.passwordList.filtered(campareStr).sorted('creationDate',true);
+            let tempResults = this.passwordList.filtered(campareStr).sorted('creationDate', true);
             if (tempResults.length) {
                 data['' + element.value] = tempResults;
             }
         }, this);
+
         if (this.passwordList.length) {
-            this.showView = (
-                <ListView stype={{ marginTop: 15 }}
-                    dataSource={this.ds.cloneWithRowsAndSections(data)}
-                    renderRow={(rowData, sectionId, rowId) => {
-                        return <ListRow rowData={rowData} />
-                    }}
-                    renderSectionHeader={(sectionData, sectionID) => {
-                        return <ListHeader sectionID={sectionID} />
-                    }}
-                />
-            );
+            if (searchResults.length) {
+                this.showView = (
+                    <ListView stype={{ marginTop: 15 }}
+                        dataSource={this.searchDS.cloneWithRows(searchResults)}
+                        renderRow={(rowData, sectionId, rowId) => {
+                            return <ListRow rowData={rowData} />
+                        }}
+                    />
+                )
+            } else {
+                this.showView = (
+                    <ListView stype={{ marginTop: 15 }}
+                        dataSource={this.ds.cloneWithRowsAndSections(data)}
+                        renderRow={(rowData, sectionId, rowId) => {
+                            return <ListRow rowData={rowData} />
+                        }}
+                        renderSectionHeader={(sectionData, sectionID) => {
+                            return <ListHeader sectionID={sectionID} />
+                        }}
+                    />
+                )
+            }
         } else {
             this.showView = <Text style={styles.initText}>暂无账号，请新建账号</Text>
         }
@@ -202,9 +217,9 @@ export default class passwordList extends React.Component {
                         autoCorrect={false} returnKeyType='done' clearButtonMode='while-editing'
                         enablesReturnKeyAutomatically={true} onSubmitEditing={
                             (event) => { this._startSearch(event.nativeEvent.text, shouldShowList); }
-                        } color='black' fontSize={16} placeholder='请输入要搜索的账号名称' />
+                        } color='black' fontSize={16} placeholder='请输入要搜索的账号名称' 
+                        onChange={()=>{searchResults.length? this._clearSearchResults() : null}} />
                 </View>
-
                 {this.showView}
                 <Toast ref="toast" position='center' />
             </View>
@@ -216,6 +231,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 64,
+        marginBottom: 50,
         backgroundColor: '#efeef4'
     },
     initText: {
