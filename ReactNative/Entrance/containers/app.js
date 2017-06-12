@@ -1,9 +1,6 @@
 import React, { Component, } from 'react';
 import {
     StyleSheet,
-    Text,
-    View,
-    Image
 } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
