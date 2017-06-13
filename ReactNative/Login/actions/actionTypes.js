@@ -1,2 +1,2 @@
 
-export const yh_login_loginClick  = 'yh_login_loginClick';
+export const yh_login_changeModule  = 'yh_login_changeModule';
