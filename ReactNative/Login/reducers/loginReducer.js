@@ -1,21 +1,21 @@
 
 import * as types from '../actions/actionTypes';
-
-const loginModules = {
-    login: 'login',
-    register: 'register'
-}
-
+import * as loginCommon from '../../Common/loginModule';
 const initState = {
-    loginModule: loginModules.login,
+    userName: null,
+    password: null,
+    loginModule: loginCommon.loginModules.login,
+    loginStatus: loginCommon.submitStatus.waittingSubmit,
     login: {
         userNamePlaceholder: '用户名',
         passwordPlaceholder: '密码'
     },
     register: {
-        userNamePlaceholder: '"字母 数字 @ . _"的组合, 最少六位',
-        passwordPlaceholder: '"字母 数字"的组合, 最少六位'
-    }
+        userNamePlaceholder: '"字母 数字 @ . _"的组合, 6-18位',
+        passwordPlaceholder: '"字母 数字 @ . _ ,"的组合, 6-18位'
+    },
+    loginFail: '用户名或密码错误，或账号不存在，请重新输入',
+    registerFail: '账号注册失败，请重新输入'
 }
 
 export default function reducers(state = initState, action = {}) {
@@ -24,6 +24,13 @@ export default function reducers(state = initState, action = {}) {
             return {
                 ...state,
                 loginModule: action.loginModule
+            }
+        case 'yh_login_submitInput':
+            return {
+                ...state,
+                loginStatus: action.loginStatus,
+                userName: userName,
+                password: password
             }
         default:
             return state;

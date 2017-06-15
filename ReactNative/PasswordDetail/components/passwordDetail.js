@@ -11,12 +11,12 @@ import fieldsName from '../../CreatePassword/containers/fieldsName'
 import DetailRow from './detailRow';
 import DetailNavigationView from './detailNavigationView';
 import { Actions } from 'react-native-router-flux';
-import realm from '../../Realm/realm';
+let realm = console.realm;
 
 export default class PasswordDetail extends Component {
     componentWillMount() {
         this.passwordType = this.props.rowData['passwordType'];
-        this.passwordTypes = realm.objects('PasswordTypes');
+        this.passwordTypes = realm?realm.objects('PasswordTypes'):[];
         let campareStr = 'typeKey = ' + this.passwordType;
         let passwordType = this.passwordTypes.filtered(campareStr);
         this.fieldsArray = JSON.parse(passwordType[0].typeFields);

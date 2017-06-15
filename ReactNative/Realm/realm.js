@@ -93,3 +93,4 @@ TypeKeys.schema = {
 };
 
 export default new Realm({ schema: [CustomItem, PasswordItems, LastedPrimaryKey,PasswordTypes,TypeKeys] });
+// export default {schema: [CustomItem, PasswordItems, LastedPrimaryKey,PasswordTypes,TypeKeys]};

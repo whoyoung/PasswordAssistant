@@ -10,7 +10,7 @@ import ReactNative, {
 import SeparatorLine from '../../ChoosePasswordType/components/separatorLine'
 import { Actions } from 'react-native-router-flux';
 import Swipeout from 'react-native-swipeout';
-import realm from '../../Realm/realm';
+let realm = console.realm;
 
 export default class ListRow extends Component {
     goPasswordDetail() {

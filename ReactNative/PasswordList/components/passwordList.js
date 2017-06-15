@@ -10,8 +10,7 @@ import {
     TextInput,
     Image
 } from 'react-native';
-
-import realm from '../../Realm/realm';
+let realm = console.realm;
 import { ListView } from 'realm/react-native';
 import ListHeader from './listHeader'
 import ListRow from './listRow'
@@ -31,10 +30,10 @@ export default class passwordList extends React.Component {
         })
     }
     componentWillMount() {
-        this.typeKeys = realm.objects('TypeKeys');
-        this.passwordList = realm.objects('PasswordItems');
-        this.lastedPrimaryKey = realm.objects('LastedPrimaryKey');
-        this.passwordTypes = realm.objects('PasswordTypes');
+        this.typeKeys = realm?objects('TypeKeys'):[];
+        this.passwordList = realm?realm.objects('PasswordItems'):[];
+        this.lastedPrimaryKey = realm?realm.objects('LastedPrimaryKey'):[];
+        this.passwordTypes = realm?realm.objects('PasswordTypes'):[];
         if (!this.typeKeys.length) {
             //网站、银行、社交账号、联系人、证件、记事本
             let keysStr = JSON.stringify([{ key: 0, value: 'website' }, { key: 1, value: 'bank' },

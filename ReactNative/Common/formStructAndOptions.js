@@ -1,8 +1,8 @@
-import realm from '../Realm/realm';
+let realm = console.realm;
 import tForm from 'tcomb-form-native';
 import fieldsName from '../CreatePassword/containers/fieldsName';
 
-let passwordTypes = realm.objects('PasswordTypes');
+let passwordTypes = realm?realm.objects('PasswordTypes'):{};
 
 let _ = require('lodash');
 const stylesheet = _.cloneDeep(tForm.form.Form.stylesheet);

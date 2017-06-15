@@ -1,9 +1,8 @@
 import * as types from './actionTypes';
-import realm from '../../Realm/realm';
 import formStructAndOptions from '../../Common/formStructAndOptions'
-
-let lastedPrimaryKey = realm.objects('LastedPrimaryKey');
-let passwordTypes = realm.objects('PasswordTypes');
+let realm = console.realm;
+let lastedPrimaryKey = realm?realm.objects('LastedPrimaryKey'):[];
+let passwordTypes = realm?realm.objects('PasswordTypes'):[];
 
 export function changeType(formType) {
     let { formStruct, formOptions } = formStructFunction(formType);

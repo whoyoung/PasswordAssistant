@@ -11,14 +11,9 @@ import ReactNative, {
     Dimensions
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Toast from 'react-native-easy-toast'
-
+import Toast from 'react-native-easy-toast';
+import * as loginCommon from '../../Common/loginModule';
 let { height } = Dimensions.get('window');
-
-const loginModules = {
-    login: 'login',
-    register: 'register'
-}
 
 export default class GestureUnlock extends Component {
     constructor(props) {
@@ -27,11 +22,12 @@ export default class GestureUnlock extends Component {
     componentWillMount() {
     }
     _changeModule(loginModule) {
-        if (loginModule == loginModules.login) {
-            this.props.actions.changeModule(loginModules.register);
+        if (loginModule == loginCommon.loginModules.login) {
+            this.props.actions.changeModule(loginCommon.loginModules.register);
         } else {
-            this.props.actions.changeModule(loginModules.login);
+            this.props.actions.changeModule(loginCommon.loginModules.login);
         }
+
     }
     _submit(loginModule) {
         let userName = this.refs.userName._lastNativeText;
@@ -39,12 +35,27 @@ export default class GestureUnlock extends Component {
         if (!userName) {
             this.refs.toast.show('请输入账号');
             return;
+        } else {
+            let reg = /^[a-zA-Z0-9_@.]{6,28}$/;
+            if (!reg.test(userName)) {
+                this.refs.toast.show('账号为"字母 数字 @ . _"的组合, 6-18位');
+                return;
+            }
+
         }
         if (!password) {
             this.refs.toast.show('请输入密码');
             return;
+        } else {
+            let reg = /^[a-zA-Z0-9_@.,]{6,18}$/;
+            if (!reg.test(password)) {
+                this.refs.toast.show('密码为"字母 数字 @ . _ ,"的组合, 6-18位');
+                return;
+            }
         }
+        this.props.actions.submitInput(loginModule, userName, password);
     }
+    // value='huyang@mail.bistu.edu.cn'
     render() {
         let { loginModule } = this.props.state;
         let { userNamePlaceholder, passwordPlaceholder } = this.props.state[loginModule];
@@ -55,7 +66,7 @@ export default class GestureUnlock extends Component {
                 } >
                     <Image resizeMode='contain' style={styles.imageSize}
                         source={require('../../Common/images/account.png')} />
-                    <TextInput ref='userName' placeholder={userNamePlaceholder} style={styles.input} clearButtonMode='while-editing' />
+                    <TextInput  ref='userName' placeholder={userNamePlaceholder} style={styles.input} clearButtonMode='while-editing' />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.textView, { marginTop: 10 }]} onPress={
@@ -63,15 +74,15 @@ export default class GestureUnlock extends Component {
                 } >
                     <Image resizeMode='contain' style={styles.imageSize}
                         source={require('../../Common/images/password.png')} />
-                    <TextInput ref='password' placeholder={passwordPlaceholder} style={styles.input} clearButtonMode='while-editing'
+                    <TextInput value='realm4yh' ref='password' placeholder={passwordPlaceholder} style={styles.input} clearButtonMode='while-editing'
                         secureTextEntry={true} />
                 </TouchableOpacity>
                 <View style={styles.btnsView} >
                     <TouchableOpacity style={styles.button} opacity={0.5} onPress={() => { this._submit(loginModule) }} >
-                        <Text style={styles.buttonText} >{loginModule == loginModules.login ? '登录' : '注册'}</Text>
+                        <Text style={styles.buttonText} >{loginModule == loginCommon.loginModules.login ? '登录' : '注册'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.registerBtn} opacity={0.5} onPress={() => { this._changeModule(loginModule) }} >
-                        <Text style={styles.buttonText} >{loginModule == loginModules.login ? '注册' : '登录'}</Text>
+                        <Text style={styles.buttonText} >{loginModule == loginCommon.loginModules.login ? '注册' : '登录'}</Text>
                     </TouchableOpacity>
                 </View>
 
