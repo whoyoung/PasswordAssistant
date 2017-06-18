@@ -51,12 +51,12 @@ export default class app extends Component {
                     >
                         <Scene key="passwordList" initial={true} title="账号列表" component={PasswordList} hideNavBar={false} hideTabBar={false}
                             icon={TabIcon} navigationBarStyle={NavigationStyles.systemNavigatorStyle}
-                            titleStyle={NavigationStyles.systemTitleStyle} />
+                            titleStyle={NavigationStyles.systemTitleStyle} imageName='passwordList' />
                         <Scene key="createPassword" title="新建账号" component={CreatePassword} hideNavBar={true} hideTabBar={false}
-                            icon={TabIcon} />
+                            icon={TabIcon} imageName='addPassword' />
                         <Scene key="setting" title="设置" component={Setting} hideNavBar={false} hideTabBar={false}
                             icon={TabIcon} navigationBarStyle={NavigationStyles.systemNavigatorStyle}
-                            titleStyle={NavigationStyles.systemTitleStyle} />
+                            titleStyle={NavigationStyles.systemTitleStyle} imageName='setting' />
                     </Scene>
                     <Scene key="choosePasswordType" title="选择账号模板" component={ChoosePasswordType} hideNavBar={true} hideTabBar={true} />
                     <Scene key="passwordDetail" title="账号详情" component={PasswordDetail} hideNavBar={true} hideTabBar={true} />
