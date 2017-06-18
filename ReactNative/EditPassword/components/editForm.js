@@ -85,6 +85,7 @@ export default class CreateNewForm extends Component {
         return this.moveH;
     }
     savePassword() {
+        Keyboard.dismiss();
         let value = this.refs.form.getValue();
         if (!value) return;
         editActions.updatePassword(this.props.rowData['id'], value);
