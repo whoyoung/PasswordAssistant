@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 18,
-        color: 'black',
+        color: 'white',
     },
     separatorLine: {
         height: 0.5

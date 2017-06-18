@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import {
   View,
   Text,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
-
+let {width} = Dimensions.get('window');
 const propTypes = {
   selected: PropTypes.bool,
   title: PropTypes.string,
@@ -29,12 +30,16 @@ class TabIcon extends Component {
   }
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
+      <View>
+        <View style={{width:width/3.0,height:1,backgroundColor:'#d4d4d7'}} />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'#f5f5f7' }} >
         {this.image}
-        <Text style={{ color: this.props.selected ? 'red' : 'black', marginTop: 5 }} >
+        <Text style={{ color: this.props.selected ? '#00ca47' : '#a3a3a3', marginTop: 5 }} >
           {this.props.title}
         </Text>
       </View>
+      </View>
+      
     )
   }
 }

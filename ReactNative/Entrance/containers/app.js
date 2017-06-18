@@ -76,9 +76,9 @@ export default class app extends Component {
 const styles = StyleSheet.create({
 
     tabBarStyle: {
-        backgroundColor: '#999',
+        backgroundColor: '#f3f5f5',
     },
     tabBarSelectedItemStyle: {
-        backgroundColor: '#ddd',
+        backgroundColor: '#f3f5f5',
     },
 });

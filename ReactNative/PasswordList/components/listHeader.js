@@ -28,13 +28,14 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         paddingHorizontal: 15,
-        height: 40,
+        height: 18,
         alignItems: 'center',
-        backgroundColor: '#87cefa'
+        justifyContent: 'center',
+        backgroundColor: '#f0eff6'
     },
     titleText: {
         flex: 1,
-        fontSize: 18,
-        color: 'black',
+        fontSize: 13,
+        color: '#7d7d82',
     }
 });
