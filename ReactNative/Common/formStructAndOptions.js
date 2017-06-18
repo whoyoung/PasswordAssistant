@@ -1,4 +1,4 @@
-let realm = console.realm;
+import realm from '../Realm/realm';
 import tForm from 'tcomb-form-native';
 import fieldsName from '../CreatePassword/containers/fieldsName';
 

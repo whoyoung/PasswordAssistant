@@ -8,5 +8,4 @@ import {
   AppRegistry
 } from  'react-native';
 import Entrance from './ReactNative/Entrance';
-import Launch from './ReactNative/Launch';
-AppRegistry.registerComponent('PasswordAssistant', () => Launch);
+AppRegistry.registerComponent('PasswordAssistant', () => Entrance);

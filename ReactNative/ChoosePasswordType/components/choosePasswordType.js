@@ -10,7 +10,7 @@ import navigationStyles from '../../Entrance/NavigationElement/navigationStyles'
 import { Actions } from 'react-native-router-flux';
 import TypeRow from './typeRow';
 import SeparatorLine from './separatorLine';
-let realm = console.realm;
+import realm from '../../Realm/realm';
 let typeKeys = realm?realm.objects('TypeKeys'):[];
 let typeData = [];
 export default class ChoosePasswordType extends Component {

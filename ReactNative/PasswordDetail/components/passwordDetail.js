@@ -11,7 +11,7 @@ import fieldsName from '../../CreatePassword/containers/fieldsName'
 import DetailRow from './detailRow';
 import DetailNavigationView from './detailNavigationView';
 import { Actions } from 'react-native-router-flux';
-let realm = console.realm;
+import realm from '../../Realm/realm';
 
 export default class PasswordDetail extends Component {
     componentWillMount() {

@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import formStructAndOptions from '../../Common/formStructAndOptions'
-let realm = console.realm;
+import realm from '../../Realm/realm';
 let lastedPrimaryKey = realm?realm.objects('LastedPrimaryKey'):[];
 let passwordTypes = realm?realm.objects('PasswordTypes'):[];
 
