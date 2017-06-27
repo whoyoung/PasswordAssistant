@@ -60,7 +60,7 @@
 }
 - (UIView *)maskView {
   if (!_maskView) {
-    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     _maskView = [[UIVisualEffectView alloc] initWithEffect:effect];
     _maskView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     _maskView.hidden = YES;
