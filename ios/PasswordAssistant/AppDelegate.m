@@ -13,7 +13,7 @@
 #import <React/RCTRootView.h>
 
 @interface AppDelegate()
-@property (nonatomic,strong) UIView *maskView;
+@property (nonatomic,strong) UIVisualEffectView *maskView;
 @property (nonatomic,strong) UIViewController *rootViewController;
 @end
 
@@ -60,9 +60,11 @@
 }
 - (UIView *)maskView {
   if (!_maskView) {
-    _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-    _maskView.backgroundColor = [UIColor lightGrayColor];
+    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    _maskView = [[UIVisualEffectView alloc] initWithEffect:effect];
+    _maskView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     _maskView.hidden = YES;
+    
     [self.window addSubview:_maskView];
   }
   return _maskView;
