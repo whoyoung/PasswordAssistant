@@ -22,7 +22,7 @@ export default class DetailRow extends Component {
         return (
             <View style={styles.container} >
                 <Text style={styles.titleText} >{title}</Text>
-                <Text style={styles.contentText} >{rowDict.value}</Text>
+                <Text style={styles.contentText} selectable={()=>{return true;}} >{rowDict.value}</Text>
                 <SeparatorLine />
             </View>
         )
