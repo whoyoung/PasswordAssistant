@@ -8,4 +8,5 @@ import {
   AppRegistry
 } from  'react-native';
 import Entrance from './ReactNative/Entrance';
+console.disableYellowBox = true;
 AppRegistry.registerComponent('PasswordAssistant', () => Entrance);
