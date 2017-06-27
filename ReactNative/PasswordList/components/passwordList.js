@@ -189,6 +189,7 @@ export default class passwordList extends React.Component {
                         renderRow={(rowData, sectionId, rowId) => {
                             return <ListRow rowData={rowData} />
                         }}
+                        keyboardDismissMode = 'on-drag'
                     />
                 )
             } else {
@@ -201,6 +202,7 @@ export default class passwordList extends React.Component {
                         renderSectionHeader={(sectionData, sectionID) => {
                             return <ListHeader sectionID={sectionID} />
                         }}
+                        keyboardDismissMode = 'on-drag'
                     />
                 )
             }
