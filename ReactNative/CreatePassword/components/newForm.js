@@ -47,6 +47,7 @@ export default class CreateNewForm extends Component {
     _keyboardDidShow = (e) => {
         if (!console.inputRef) return;
         this.needMove = false;
+        if (!this.refs.form || !this.refs.form.getComponent(console.inputRef)) return;
         this.refs.form.getComponent(console.inputRef).refs.input.measure((ox, oy, w, h, px, py) => {
             let leftHeight = screenHeight - py;//输入框距离底部的距离 = （屏幕的高度 - 当前TextInput的高度）
             //输入框距离底部的距离小于键盘的高度，需要滑动,36是默认一行输入框的高度
