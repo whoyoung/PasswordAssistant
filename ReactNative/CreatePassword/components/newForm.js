@@ -55,7 +55,7 @@ export default class CreateNewForm extends Component {
             if (leftHeight < e.startCoordinates.height + rowHeight) {
                 this.needMove = true;
                 let moveHeight = e.startCoordinates.height + rowHeight - leftHeight;
-                this.scrollViewTo(this._dealOffset() + moveHeight);
+                this.scrollViewTo(this.moveH+moveHeight);
             }
         });
     }
@@ -70,21 +70,11 @@ export default class CreateNewForm extends Component {
     }
     _keyboardDidHide = () => {
         if (this.needMove) {
-            this.scrollViewTo(this._dealOffset());
+            this.scrollViewTo(this.moveH);
         }
         console.inputRef = null;
     }
-    _dealOffset() {
-        if (this.moveH <= 0) {
-            this.moveH = 0;
-        } else if (scrollContainerH >= this.contentHeight) {
-            this.moveH = 0;
-        } else if (this.moveH + scrollContainerH > this.contentHeight) {
-            this.moveH = this.contentHeight - scrollContainerH;
-        }
-        return this.moveH;
-    }
-
+    
     savePassword() {
         Keyboard.dismiss();
         let value = this.refs.form.getValue();
@@ -121,7 +111,7 @@ export default class CreateNewForm extends Component {
                     }}
                     keyboardShouldPersistTaps={'handled'}
                     onScrollEndDrag={(e) => {
-                        this.moveH = e.nativeEvent.contentOffset.y;
+                        this.moveH = e.nativeEvent.targetContentOffset.y;
                     }} >
                     <RealForm ref='form' type={tForm.struct(formStruct)} onChange={(value, path) => this.onChange(value, path)}
                         options={formOptions} />
